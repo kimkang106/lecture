@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>고교학점제 퀴즈 답안지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EEF1F7; --paper:#FFFFFF; --ink:#16223B; --ink2:#55627E; --line:#D3DAE8; --grid:rgba(22,34,59,.055);
+  --hl:#FFE566; --hl-soft:#FFF4B8; --pen:#D22B45; --okc:#1B8A57;
+  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+    --hl-soft:#3B3618; --pen:#FF6B81; --okc:#4CC58C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+  --hl-soft:#3B3618; --pen:#FF6B81; --okc:#4CC58C;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;background-color:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;-webkit-text-size-adjust:100%;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid #E2C200;outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:18px 14px 60px}
+.present .wrap{max-width:980px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9vw,52px);line-height:1.12;margin:0}
+h2{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.25;margin:0}
+.lead{color:var(--ink2);margin:12px 0 0;max-width:34em}
+.seg2{display:inline-flex;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden;margin-top:18px;background:var(--paper)}
+.seg2 button{border:0;background:transparent;padding:7px 16px;font-size:14.5px;font-weight:700}
+.seg2 button.on{background:var(--ink);color:var(--paper)}
+.rcards{display:grid;gap:12px;margin-top:18px}
+.rcard{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;text-align:left;width:100%;background:var(--paper);border:1.5px solid var(--ink);border-radius:12px;padding:14px 16px;box-shadow:3px 3px 0 var(--ink)}
+.rcard:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.rcard .rn{grid-row:1 / 3;font-family:var(--display);font-size:38px;line-height:1;width:54px;height:54px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%}
+.rcard .rt{font-weight:700;font-size:17px}
+.rcard .rs{color:var(--ink2);font-size:14px}
+
+/* sheet */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.back{border:1.5px solid var(--ink);background:var(--paper);border-radius:99px;padding:3px 12px;font-size:13.5px;font-weight:700}
+.cnt{font-weight:700;font-variant-numeric:tabular-nums}
+.omr{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.omr i{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink);display:block}
+.omr i.done{background:var(--ink)}
+.omr i.bad{border-color:var(--pen);background:transparent;position:relative}
+.omr i.bad::after{content:"";position:absolute;left:1px;right:1px;top:50%;border-top:2px solid var(--pen);transform:rotate(-45deg)}
+.omr i.cur{box-shadow:0 0 0 3px var(--hl)}
+.qcard{position:relative;background:var(--paper);border:1.5px solid var(--ink);border-radius:12px;padding:18px 18px 12px;margin-top:14px}
+.qno{font-family:var(--display);font-size:20px}
+.qtag{display:inline-block;font-size:12.5px;font-weight:700;border:1.5px solid var(--ink2);color:var(--ink2);border-radius:4px;padding:0 7px;margin-left:8px;vertical-align:2px}
+.qtext{font-size:18px;font-weight:500;margin:8px 0 6px;word-break:keep-all}
+.prompt{font-size:14.5px;color:var(--ink2);margin:0 0 6px}
+.opts{margin-top:8px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 12px;margin:8px 0;border:1.5px solid var(--line);background:var(--bg);border-radius:12px}
+.opt .bub{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--ink);font-weight:700;background:var(--paper)}
+.opt .ot{word-break:keep-all}
+.opt.picked{border-color:var(--ink)}
+.opt.picked .bub{background:var(--ink);color:var(--paper)}
+.opt.key{border-color:var(--pen);background:var(--paper)}
+.opt.key .bub{box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--pen);border-color:var(--ink)}
+.opt.wrong{opacity:.75}
+.opt.wrong .bub{border-color:var(--pen);color:var(--pen);background:var(--paper)}
+.opt[disabled]{cursor:default;color:var(--ink)}
+.ox .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ox .opt{justify-content:center;flex-direction:column;gap:0;padding:14px 0;margin:8px 0}
+.ox .opt .bub{width:56px;height:56px;font-family:var(--display);font-size:28px;font-weight:400}
+.ox .opt .ot{display:none}
+.fb{margin-top:10px;padding:12px 0 4px;border-top:1.5px dashed var(--line);position:relative}
+.stamp{position:absolute;right:2px;top:-30px;transform:rotate(-8deg);font-family:var(--display);font-size:26px;line-height:1;color:var(--pen);border:3px double var(--pen);border-radius:8px;padding:5px 12px;background:var(--paper);animation:stamp .28s ease-out}
+@keyframes stamp{from{transform:rotate(-8deg) scale(1.6);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
+.fb .ans{font-weight:700}
+.fb p{margin:6px 0 0;font-size:15px}
+.nav{display:flex;gap:8px;margin-top:12px}
+.btn{border:1.5px solid var(--ink);background:var(--paper);border-radius:10px;padding:10px 16px;font-weight:700;font-size:15px}
+.btn.pri{background:var(--hl);color:#16223B;box-shadow:3px 3px 0 var(--ink)}
+.btn.pri:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.grow{flex:1}
+.score{font-family:var(--display);font-size:clamp(64px,22vw,110px);line-height:1;margin:16px 0 0}
+.score small{font-size:.36em;color:var(--ink2)}
+.wrongs{margin-top:20px;display:grid;gap:10px}
+.wq{background:var(--paper);border:1.5px solid var(--line);border-left:5px solid var(--pen);border-radius:8px;padding:10px 14px}
+.wq b{font-size:15px}
+.wq p{margin:4px 0 0;font-size:14px;color:var(--ink2)}
+
+/* presenter */
+.present .qcard{padding:28px 30px 20px}
+.present .qtext{font-size:clamp(22px,3.6vw,38px);line-height:1.4}
+.present .prompt{font-size:clamp(16px,2.2vw,22px)}
+.present .opt{padding:14px 16px}
+.present .opt .ot{font-size:clamp(17px,2.4vw,26px)}
+.present .opt .bub{width:44px;height:44px;font-size:20px}
+.present .ox .opt .bub{width:96px;height:96px;font-size:52px}
+.present .fb p{font-size:clamp(16px,2.2vw,22px)}
+.present .stamp{font-size:36px;top:-42px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript>이 페이지는 JavaScript가 필요해요.</noscript>
+<script>
+(function(){
+"use strict";
+
+var MARK=["①","②","③","④","⑤","⑥"];
+function ox(q,a,exp){return {q:q,opts:["O","X"],a:a,exp:exp}}
+function mc(q,opts,a,exp,prompt){return {q:q,opts:opts,a:a,exp:exp,prompt:prompt||""}}
+
+var CASE_OPTS=["정상 이수(학점 취득)","예방지도","보충지도","추가학습","별도 이수 기회(창의적 체험활동)","미이수(추가 기회 제공 어려움)"];
+
+var ROUNDS=[
+ {n:1,title:"O/X 퀴즈",sub:"교육과정과 2022 개정, 10문항",type:"ox",items:[
+  ox("2022 개정 교육과정은 '차수'가 아니라 '연도+개정'으로 이름 붙이는 수시 개정 체제 속에서 나왔다.",0,"5·6·7차는 전면 개정 체제라 차수로 불렀어요. 이후에는 필요한 부분만 고치는 수시 개정 체제로 바뀌어 2007·2009·2015·2022 개정처럼 연도로 부릅니다. 2022 개정은 7차 이래 4번째 수시 개정이에요."),
+  ox("2022 개정 교육과정은 2025년에 초·중·고 전 학년에 한꺼번에 적용되었다.",1,"연차별로 적용했어요. 2024년 초1~2, 2025년 초3~4·중1·고1, 2026년 초5~6·중2·고2, 2027년 중3·고3 순서예요."),
+  ox("2026년 현재 고3은 2015 개정, 고1·고2는 2022 개정 교육과정을 적용받는다.",0,"고3은 2015 개정을 끝까지 적용받고, 고1·2는 2022 개정을 적용받아요. 그래서 학년마다 생활기록부 양식과 평가 방식도 달라요."),
+  ox("2022 개정 교육과정을 고1부터 3년 내내 적용받은 첫 학생들은 2028학년도 대입을 치른다.",0,"2025년 고1이 2027년 고3이 되고, 이들이 2028학년도 대입(수능)을 치릅니다."),
+  ox("연차별로 나누어 적용하는 이유 중 하나는, 한 학생이 입학부터 졸업까지 하나의 교육과정을 적용받게 하려는 것이다.",0,"학교가 새 교육과정을 익히고 연구할 시간이 필요하다는 이유와 함께, 한 학생에게 하나의 교육과정을 적용하려는 것이 연차별 적용의 이유예요."),
+  ox("2022 개정 교육과정에서 1학점은 50분을 기준으로 17회 수업하는 양이다.",1,"16회예요. 2015 개정에서는 17회(16+1)였고, 2022 개정에서 수업량을 적정화했어요. 다만 현재 고3은 2015 개정이라 17회를 적용받아 학년 간에 1주의 수업량 차이가 생겨요."),
+  ox("2022 개정에서는 필수 이수 학점이 94학점에서 84학점으로 줄고, 학생이 자율적으로 채우는 학점은 늘었다.",0,"필수 이수 94→84학점, 자율 이수 80→90학점이에요. 다양한 선택과목을 개설하고 교육과정을 편성하는 유연성을 높이려는 조정이에요."),
+  ox("고교학점제의 과목 이수 기준은 '출석률 2/3 이상'뿐이며, 학업성취율은 기준에 포함되지 않는다.",1,"출석률 2/3 이상과 학업성취율 40% 이상, 두 가지가 기준이에요. 기준에 못 미치면 최소 성취수준 보장지도나 추가학습으로 이수 기회를 줍니다."),
+  ox("2022 개정 보통교과의 선택과목은 일반선택과 진로선택, 두 유형으로 나뉜다.",1,"융합선택이 추가되어 세 유형이에요. 선택과목 수도 2015 개정의 95개에서 138개(일반 36, 진로 64, 융합 38)로 늘었어요."),
+  ox("사회·과학 융합선택과목은 석차등급(5등급) 없이 성취도(A~E)만 기재하는 절대평가 과목이다.",0,"맞아요. 대부분의 보통교과는 5등급 상대평가와 성취도를 함께 기재하지만, 사회·과학 융합선택은 성취도만 기재해요. 절대평가 과목으로 선택이 쏠리지 않도록 지도해야 한다는 지적이 있어요.")
+ ]},
+ {n:2,title:"판정 케이스",sub:"이수일까 미이수일까, 8문항",type:"case",items:[
+  mc("수학 — 학업성취율 62%, 과목 출석률 90%",CASE_OPTS,0,"출석률 2/3 이상, 학업성취율 40% 이상을 모두 충족했으니 학점을 취득해요."," 이 학생은 어떻게 처리될까요?"),
+  mc("화학 — 학업성취율 35%, 과목 출석률 95%",CASE_OPTS,2,"학업성취율이 40% 미만이면 출석률과 무관하게 보충지도 대상이에요. 성적 산출 이후 학기 안(방학 포함)에 실시해요.","이 학생은 어떻게 처리될까요?"),
+  mc("영어 — 학업성취율 30%, 과목 출석률 50%. 두 기준 모두 미달이에요.",CASE_OPTS,2,"보충지도 대상은 학업성취율 40% 미만인 학생이고 출석률과는 무관해요(원고 표 기준). 추가학습은 성취율은 충족했지만 출석률이 모자란 학생의 몫이에요.","이 학생은 어떻게 처리될까요?"),
+  mc("사회문제 탐구 — 학업성취율 55%, 과목 출석률 60%",CASE_OPTS,3,"학업성취율은 충족했지만 출석률 2/3에 못 미친 경우예요. 보충지도에 준해서 추가학습으로 이수 기회를 줍니다.","이 학생은 어떻게 처리될까요?"),
+  mc("1학기 중간고사 뒤, 기말에 성취율이 모자랄 것 같다고 걱정하는 학생이 희망해서 방과후 기초학력 보충 프로그램에 참여한다.",CASE_OPTS,1,"학기 중에 미도달이 예상되는 학생 가운데 희망자를 대상으로 하는 것이 예방지도예요. 1학점당 3시수의 보장지도 중 80%까지 예방지도로 인정해요.","이 지도는 무엇에 해당할까요?"),
+  mc("교양 '진로와 직업' — 교양은 성취수준을 P로 산출하고, 이 학생의 과목 출석률은 60%",CASE_OPTS,3,"교양과목은 성취율 기준을 적용하지 않고 최소 성취수준 보장지도 대상에서도 제외되지만, 출석률이 모자라면 추가학습으로 이수 기회를 줍니다.","이 학생은 어떻게 처리될까요?"),
+  mc("창의적 체험활동 — 3년간 운영 횟수의 60%만 출석했다.",CASE_OPTS,4,"창의적 체험활동은 3년간 운영 횟수의 2/3 이상 출석이 기준이고 성취율은 적용하지 않아요. 미달하면 학기 안에 별도의 창의적 체험활동을 통해 이수 기회를 줍니다.","이 학생은 어떻게 처리될까요?"),
+  mc("지역 대학 연계 '학교 밖 교육' 강좌 — 출석률 50%",CASE_OPTS,5,"학교 밖 교육은 출석률 기준이 적용되지만 성적은 산출하지 않고, 최소 성취수준 보장지도 대상에서도 빠져요. 특성상 추가학습 기회를 주기 어려워서 기준에 못 미치면 이수하지 못해요. 학교 밖 교육을 권할 때 출석 관리가 중요한 이유예요.","이 학생은 어떻게 처리될까요?")
+ ]},
+ {n:3,title:"숫자로 보는 2022 개정",sub:"학점과 편제, 10문항",type:"mc",items:[
+  mc("고등학교 3년간 총 이수 학점은?",["174학점","180학점","192학점","204학점"],2,"교과 174학점(필수 84 + 자율 90)과 창의적 체험활동 18학점을 합쳐 192학점이에요."),
+  mc("보통교과의 필수 이수 학점은? (2015 개정은 94학점이었어요)",["94학점","84학점","74학점","64학점"],1,"84학점으로 줄었어요. 대신 학생이 자율적으로 고르는 학점이 80에서 90으로 늘었어요."),
+  mc("국·영·수 세 교과의 총 이수 학점 상한은?",["72학점","81학점","90학점","상한 없음"],1,"국·영·수 총 이수 학점은 81학점을 넘을 수 없어요. 한국사와 체육·예술·교양 영역은 필수를 유지하고, 사회·과학 교과군은 균형적인 학습을 고려해요."),
+  mc("한국사1의 편성 학점 범위는?",["2~3학점","3학점(늘리거나 줄일 수 없음)","3~4학점","2~4학점"],1,"한국사는 기본 3학점이고 범위도 3학점이라 감(−)도 증(+)도 불가해요."),
+  mc("공통수학1의 기본 학점은 4학점이에요. 학교가 편성할 수 있는 범위는?",["3~4학점","4~5학점","3~5학점","4학점 고정"],0,"공통과목은 1학점 내에서 줄일 수는 있지만(3~4학점) 늘릴 수는 없어요. 선택과목은 기본 4학점에서 ±1학점을 조정할 수 있고요."),
+  mc("2022 개정 보통교과 선택과목(일반+진로+융합)은 모두 몇 개일까요?",["95개","120개","138개","160개"],2,"일반선택 36개, 진로선택 64개, 융합선택 38개로 모두 138개예요. 2015 개정은 95개(일반 51, 진로 44)였어요."),
+  mc("창의적 체험활동의 이수 학점과 시간은? (2022 개정)",["18학점(306시간)","18학점(288시간)","16학점(272시간)","24학점(408시간)"],1,"18학점, 288시간이에요. 2015 개정은 18학점 306시간이었어요. 1학점을 16회로 계산해서 달라졌어요."),
+  mc("2028학년도 수능에서 국어와 수학의 출제 범위는?",["선택과목 체제를 유지한다","선택과목을 없애고 모두 같은 공통 범위에서 출제한다","국어만 선택과목을 없앤다","절대평가로 전환한다"],1,"선택과목제를 폐지하고 통합형·융합형으로 바뀌어요. 국어는 화법과 언어·독서와 작문·문학, 수학은 대수·미적분Ⅰ·확률과 통계 범위에서 공통으로 출제하고, 상대평가를 유지해요. 영어와 한국사는 절대평가예요."),
+  mc("2026년 1월 21일 일부 개정에서 학점 이수 기준은 어떻게 바뀌었을까요?",["더 엄격해졌다","완화되었다","변화가 없다","폐지되었다"],1,"국가교육위원회가 학점 이수 기준을 완화했어요. 출석률과 학업성취율 중 하나 이상은 반영하도록 했다는 내용이에요. 강의 전에 최신 지침을 한 번 더 확인해 보세요."),
+  mc("최소 성취수준 보장지도는 1학점당 3시수예요. 이 가운데 예방지도로 인정되는 최대 비율은?",["50%","60%","80%","100%"],2,"전체 보장지도 시간의 80%까지 예방지도로 인정해요.")
+ ]}
+];
+
+var state={view:"home",mode:"solo",r:0,i:0,ans:[],shown:false};
+var app=document.getElementById("app");
+
+function R(){return ROUNDS[state.r]}
+function Q(){return R().items[state.i]}
+
+function omrHtml(){
+  var items=R().items;
+  return '<div class="omr" aria-hidden="true">'+items.map(function(q,k){
+    var c="";
+    if(state.mode==="solo"&&state.ans[k]!==undefined)c=state.ans[k]===q.a?"done":"bad";
+    else if(state.mode==="present"&&k<state.i)c="done";
+    if(k===state.i)c+=" cur";
+    return '<i class="'+c+'"></i>';
+  }).join("")+'</div>';
+}
+
+function viewHome(){
+  var cards=ROUNDS.map(function(r,k){
+    return '<button class="rcard" data-a="start" data-k="'+k+'"><span class="rn">'+r.n+'</span><span class="rt">'+r.title+'</span><span class="rs">'+r.sub+'</span></button>';
+  }).join("");
+  return '<div class="wrap"><h1>고교학점제<br>퀴즈 답안지</h1>'+
+   '<p class="lead">2022 개정 교육과정과 고교학점제를 문제로 확인해 봐요. 폰으로 혼자 풀거나, 화면에 띄워 다 같이 풀 수 있어요.</p>'+
+   '<div class="seg2" role="group" aria-label="방식">'+
+   '<button data-a="mode" data-m="solo" class="'+(state.mode==="solo"?"on":"")+'">혼자 풀기</button>'+
+   '<button data-a="mode" data-m="present" class="'+(state.mode==="present"?"on":"")+'">함께 보기</button></div>'+
+   '<p class="lead" style="font-size:14px;margin-top:8px">'+(state.mode==="solo"?"고르면 바로 채점하고 해설을 보여 줘요.":"문제를 크게 보여 주고, 정답 공개 버튼으로 해설을 열어요. 강의실 화면에 띄울 때 쓰세요.")+'</p>'+
+   '<div class="rcards">'+cards+'</div></div>';
+}
+
+function viewQuiz(){
+  var r=R(),q=Q(),k=state.i,n=r.items.length;
+  var solo=state.mode==="solo",picked=state.ans[k];
+  var answered=solo?picked!==undefined:state.shown;
+  var isOx=r.type==="ox";
+  var opts=q.opts.map(function(t,j){
+    var c="opt";
+    if(solo&&picked!==undefined){
+      if(j===q.a)c+=" key";
+      else if(j===picked)c+=" wrong";
+      if(j===picked)c+=" picked";
+    }else if(!solo&&state.shown){
+      if(j===q.a)c+=" key";
+    }
+    var dis=(solo&&picked!==undefined)||!solo?" disabled":"";
+    return '<button class="'+c+'" data-a="pick" data-j="'+j+'"'+dis+'><span class="bub">'+(isOx?t:MARK[j])+'</span><span class="ot">'+t+'</span></button>';
+  }).join("");
+
+  var fb="";
+  if(answered){
+    var good=solo?picked===q.a:true;
+    fb='<div class="fb">'+(solo?'<div class="stamp">'+(good?"◯ 정답":"✕ 오답")+'</div>':"")+
+      '<div class="ans">정답: '+(isOx?q.opts[q.a]:MARK[q.a]+" "+q.opts[q.a])+'</div><p>'+q.exp+'</p></div>';
+  }
+  var nav;
+  if(solo){
+    nav='<div class="nav">'+(answered?'<button class="btn pri grow" data-a="next">'+(k===n-1?"결과 보기":"다음 문제")+'</button>':'<span class="prompt" style="margin:0">답을 골라 보세요</span>')+'</div>';
+  }else{
+    nav='<div class="nav"><button class="btn" data-a="prev"'+(k===0?" disabled":"")+'>이전</button>'+
+      (state.shown?'<button class="btn pri grow" data-a="next">'+(k===n-1?"마치기":"다음 문제")+'</button>':'<button class="btn pri grow" data-a="reveal">정답 공개</button>')+'</div>';
+  }
+  return '<div class="wrap"><div class="top"><button class="back" data-a="home">← 처음으로</button><span class="cnt">'+r.title+' '+(k+1)+' / '+n+'</span></div>'+
+    omrHtml()+
+    '<div class="qcard '+(isOx?"ox":"")+'"><div class="qno">문제 '+(k+1)+(r.type==="case"?'<span class="qtag">사례</span>':"")+'</div>'+
+    '<div class="qtext">'+q.q+'</div>'+(q.prompt?'<p class="prompt">'+q.prompt.trim()+'</p>':"")+
+    '<div class="opts">'+opts+'</div>'+fb+'</div>'+nav+'</div>';
+}
+
+function viewResult(){
+  var r=R(),n=r.items.length,score=0,wrongs=[];
+  r.items.forEach(function(q,k){if(state.ans[k]===q.a)score++;else wrongs.push(k)});
+  var msg=score===n?"만점이에요!":score>=n*0.7?"잘했어요.":"오답 노트를 한 번 훑어볼까요?";
+  var wh=wrongs.map(function(k){
+    var q=r.items[k],isOx=r.type==="ox";
+    return '<div class="wq"><b>문제 '+(k+1)+'. '+q.q+'</b><p>정답: '+(isOx?q.opts[q.a]:MARK[q.a]+" "+q.opts[q.a])+'<br>'+q.exp+'</p></div>';
+  }).join("");
+  return '<div class="wrap"><div class="top"><button class="back" data-a="home">← 처음으로</button><span class="cnt">'+r.title+'</span></div>'+
+    '<div class="score">'+score+'<small> / '+n+'</small></div><p class="lead">'+msg+'</p>'+
+    (wrongs.length?'<h2 style="margin-top:22px">오답 노트</h2><div class="wrongs">'+wh+'</div>':"")+
+    '<div class="nav" style="margin-top:20px"><button class="btn" data-a="retry">같은 라운드 다시</button><button class="btn pri grow" data-a="home">다른 라운드 고르기</button></div></div>';
+}
+
+function render(){
+  document.body.className=state.mode==="present"?"present":"";
+  app.innerHTML=state.view==="home"?viewHome():state.view==="quiz"?viewQuiz():viewResult();
+}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-a]");if(!t||t.disabled)return;
+  var a=t.getAttribute("data-a"),n=R().items.length;
+  if(a==="mode")state.mode=t.getAttribute("data-m");
+  else if(a==="start"){state.r=+t.getAttribute("data-k");state.i=0;state.ans=[];state.shown=false;state.view="quiz"}
+  else if(a==="pick"){if(state.mode==="solo"&&state.ans[state.i]===undefined)state.ans[state.i]=+t.getAttribute("data-j")}
+  else if(a==="reveal")state.shown=true;
+  else if(a==="next"){
+    state.shown=false;
+    if(state.i<n-1)state.i++;
+    else state.view=state.mode==="solo"?"result":"home";
+  }
+  else if(a==="prev"){if(state.i>0){state.i--;state.shown=false}}
+  else if(a==="home")state.view="home";
+  else if(a==="retry"){state.i=0;state.ans=[];state.shown=false;state.view="quiz"}
+  render();
+  if(a!=="pick"&&a!=="reveal")window.scrollTo(0,0);
+});
+render();
+})();
+</script>
+</body>
+</html>

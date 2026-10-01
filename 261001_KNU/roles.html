@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>역할 뽑기 토론</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EEF1F7; --paper:#FFFFFF; --ink:#16223B; --ink2:#55627E; --line:#D3DAE8; --grid:rgba(22,34,59,.055);
+  --hl:#FFE566; --hl-soft:#FFF4B8; --hl-edge:#E2C200;
+  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+    --hl-soft:#3B3618; --hl-edge:#C9A92A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+  --hl-soft:#3B3618; --hl-edge:#C9A92A;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background-color:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--hl-edge);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:18px 14px 80px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,9vw,50px);line-height:1.12;margin:0}
+h2{font-family:var(--display);font-weight:400;font-size:22px;margin:0}
+.lead{color:var(--ink2);margin:10px 0 0}
+.q{margin:14px 0 0;background:var(--hl-soft);border:1.5px solid var(--hl-edge);border-radius:10px;padding:8px 14px;font-weight:700}
+
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;gap:6px;margin:16px -14px 0;padding:8px 14px;background:var(--bg);border-bottom:1.5px solid var(--line)}
+.tab{flex:1;border:1.5px solid var(--ink);background:var(--paper);border-radius:99px;padding:6px 8px;font-weight:700;font-size:14.5px}
+.tab.on{background:var(--ink);color:var(--paper)}
+
+.panel{margin-top:16px}
+.seg2{display:flex;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden;background:var(--paper)}
+.seg2 button{flex:1;border:0;background:transparent;padding:8px 10px;font-weight:700;font-size:14.5px}
+.seg2 button.on{background:var(--ink);color:var(--paper)}
+.hint{color:var(--ink2);font-size:14px;margin:10px 0 0}
+.nums{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+.nums button{border:1.5px solid var(--ink);background:var(--paper);border-radius:12px;padding:12px 0;font-family:var(--display);font-size:24px;box-shadow:2px 2px 0 var(--ink)}
+.nums button:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+.draw{display:block;width:100%;margin-top:14px;border:1.5px solid var(--ink);background:var(--hl);color:#16223B;border-radius:14px;padding:18px;font-family:var(--display);font-size:26px;box-shadow:4px 4px 0 var(--ink)}
+.draw:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.spin{display:grid;place-items:center;min-height:180px;margin-top:14px;border:2px dashed var(--ink);border-radius:16px;background:var(--paper);font-family:var(--display);font-size:34px;text-align:center;padding:12px}
+
+/* card */
+.card{margin-top:16px;background:var(--paper);border:1.5px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:4px 4px 0 var(--ink);animation:flip .45s ease-out}
+@keyframes flip{from{transform:rotateY(80deg) scale(.96);opacity:0}to{transform:none;opacity:1}}
+.card-h{padding:14px 16px;color:#fff}
+.card-h .em{font-size:34px;line-height:1}
+.card-h .rn{font-family:var(--display);font-size:30px;line-height:1.15;margin-top:4px}
+.card-h .rs{font-size:14px;opacity:.92}
+.card-b{padding:6px 16px 16px}
+.sec{margin-top:14px}
+.sec h3{margin:0 0 4px;font-size:13.5px;color:var(--ink2)}
+.stance{font-size:18px;font-weight:700;line-height:1.5;word-break:keep-all}
+.card ul{margin:0;padding-left:1.15em}
+.card li{margin:5px 0;word-break:keep-all}
+.rb{background:var(--bg);border-radius:10px;padding:8px 12px}
+.rb p{margin:2px 0}
+.ask{background:var(--hl-soft);border:1.5px solid var(--hl-edge);border-radius:10px;padding:10px 12px;font-weight:700;word-break:keep-all}
+.mission{margin-top:14px;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.mission h3{margin:0 0 6px;font-size:15px}
+.mission label{display:flex;gap:10px;align-items:flex-start;margin:6px 0}
+.mission input{width:20px;height:20px;margin-top:2px;accent-color:var(--ink)}
+.tpl{margin:8px 0 0;padding:10px 12px;background:var(--bg);border-radius:10px;font-size:14.5px}
+.btn{border:1.5px solid var(--ink);background:var(--paper);border-radius:10px;padding:8px 14px;font-weight:700;font-size:14.5px}
+.btn.pri{background:var(--hl);color:#16223B;box-shadow:3px 3px 0 var(--ink)}
+.btn.ink{background:var(--ink);color:var(--paper)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* timer */
+.clock{margin-top:14px;text-align:center;background:var(--paper);border:1.5px solid var(--ink);border-radius:16px;padding:18px 12px;box-shadow:4px 4px 0 var(--ink)}
+.clock .ph{font-weight:700;font-size:18px}
+.clock .tm{font-family:var(--display);font-size:clamp(72px,26vw,150px);line-height:1.05;font-variant-numeric:tabular-nums}
+.clock .tm.warn{color:#D22B45}
+.bar{height:12px;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden;background:var(--bg);margin:8px 6px 0}
+.bar b{display:block;height:100%;background:var(--ink);transition:width .5s linear}
+.steps{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:6px}
+.steps li{display:flex;justify-content:space-between;gap:10px;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--paper)}
+.steps li.on{border-color:var(--ink);background:var(--hl-soft);font-weight:700}
+.steps li.done{opacity:.55}
+.steps li span:first-child{word-break:keep-all}
+
+details.all{margin-top:10px;border:1.5px solid var(--ink);border-radius:12px;background:var(--paper);overflow:hidden}
+details.all summary{cursor:pointer;padding:12px 14px;font-weight:700;list-style:none;display:flex;gap:10px;align-items:center}
+details.all summary::-webkit-details-marker{display:none}
+details.all .card-b{border-top:1.5px dashed var(--line)}
+.dot{width:14px;height:14px;border-radius:50%;flex:none}
+
+.final{margin-top:16px;border:1.5px solid var(--ink);border-radius:14px;background:var(--paper);overflow:hidden}
+.fin-h{display:grid;gap:2px;width:100%;text-align:left;border:0;background:var(--hl-soft);padding:12px 14px}
+.fin-h span{font-size:13px;font-weight:700;color:var(--ink2)}
+.fin-h b{font-family:var(--display);font-weight:400;font-size:21px;line-height:1.3;word-break:keep-all}
+.fin-h em{font-style:normal;font-size:13px;color:var(--ink2)}
+.fin-b{padding:12px 14px 14px}
+.lens{margin:8px 0 0;padding-left:1.1em}
+.lens li{margin:4px 0}
+.ans{display:block;width:100%;margin-top:10px;border:1.5px solid var(--ink);border-radius:10px;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font);padding:10px;resize:vertical}
+.finq{margin-top:14px;text-align:center;font-family:var(--display);font-size:clamp(24px,6vw,36px);line-height:1.3;background:var(--hl);color:#16223B;border:1.5px solid var(--ink);border-radius:14px;padding:16px;box-shadow:4px 4px 0 var(--ink);word-break:keep-all}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>역할 뽑기 토론</h1>
+  <p class="lead">역할을 받고, 그 입장이 되어 이야기해 봅니다.</p>
+  <div class="q">고교학점제는 학생 주도성을 정말 키우는가?</div>
+  <nav class="tabs" id="tabs"></nav>
+  <div id="view"></div>
+</div>
+<script>
+(function(){
+"use strict";
+var KEY="hakjeom-roles-v1";
+var ROLES=[
+ {id:"teacher",em:"🧑‍🏫",name:"고등학교 교사",color:"#2B62A6",
+  stance:"학생 선택권은 좋은 방향이지만, 교사와 공간과 시간표가 받쳐 주지 않으면 학교가 먼저 무너진다.",
+  reasons:["개설 과목이 늘면 교사 확보, 교실 공간, 블록 수업 편성이 어려워진다.","최소 성취수준 보장지도를 일과 후나 방학에 하는데 지도 수당이 충분한지 의문이다.","학생의 미이수를 왜 교사가 책임져야 하는가, 교과교사의 출결 업무 부담도 커졌다."],
+  rebutQ:"학생의 선택 폭이 넓어져 수업 동기가 높아진다.",
+  rebutA:"동기는 인정하지만 그 비용을 학교와 교사가 개인적으로 감당하는 구조가 문제다.",
+  final:"교사로서, 학생이 스스로 선택하고 그 결과를 돌아보게 하려고 내가 할 수 있는 일은…",
+  ask:"교사가 늘 부족한 농산어촌 학교에서 학생 선택권은 누구의 선택권인가?"},
+ {id:"student",em:"🎒",name:"고등학생",color:"#C4491F",
+  stance:"내 진로에 맞는 수업을 고를 수 있다는 건 좋지만, 아직 진로가 없는 나에게 선택은 부담이다.",
+  reasons:["진로가 불확실한 학생은 과목 선택 자체가 혼란스럽다.","잘못 골랐다가 진로를 바꾸면 불이익이 생길까 걱정된다.","학교마다 개설 과목이 달라 원하는 과목을 못 들을 수 있고, 이동 수업이 늘어 학급 소속감이 줄어든다."],
+  rebutQ:"선택하면서 진로를 찾아가는 게 아닌가.",
+  rebutA:"그럴 수 있으려면 상담과 진로 정보가 있어야 하고, 선택을 바꿀 여지가 있어야 한다.",
+  final:"학생으로서, 내 선택에 책임지고 조정해 가려면 나에게 필요한 것은…",
+  ask:"고른 과목이 틀렸다고 느끼면 언제, 어떤 비용으로 바꿀 수 있어야 할까?"},
+ {id:"parent",em:"🏠",name:"학부모",color:"#1F7F74",
+  stance:"자녀에게 맞는 공부를 시킨다는 취지는 이해하지만, 정보가 부족하고 사교육과 격차가 커질까 불안하다.",
+  reasons:["제도와 진로에 대한 정보가 부족해 과목 선택이 자녀에게 어떤 영향을 줄지 판단하기 어렵다.","학교에 없는 과목을 밖에서 배우거나 진로 상담을 사교육에 맡기려는 수요가 늘 수 있다.","교육 자원이 풍부한 지역과 그렇지 않은 지역, 가정의 정보력과 경제력에 따라 유불리가 생긴다."],
+  rebutQ:"공동교육과정과 온라인학교가 격차를 메운다.",
+  rebutA:"이동 시간, 시간표 조정, 학교 밖 교육의 성적 미산출 같은 한계가 남는다.",
+  final:"학부모로서, 자녀의 선택을 믿고 지지하려면 내가 알아야 하고 해야 할 일은…",
+  ask:"학부모가 알아야 할 정보를 학교는 언제, 어떤 방법으로 안내해야 할까?"},
+ {id:"admit",em:"🎓",name:"대학 입학사정관",color:"#6C48A3",
+  stance:"과목 선택은 곧 학생의 진로와 학업 준비를 보여 주는 자료다. 전략이 아니라 진로에서 나온 선택을 보고 싶다.",
+  reasons:["학생부 종합전형에서 학업 역량과 진로 역량을 본다. 모집단위와 관련된 과목을 위계에 맞게 이수하고 성취했는지가 평가 대상이다.","2028 대입은 통합형·융합형 수능이라 수능만 준비하거나 반대로 수능을 전혀 고려하지 않으면 학생의 진로 결정에 방해가 될 수 있다.","내신은 5등급 상대평가와 성취도를 함께 보고, 절대평가 과목에 선택이 몰리는 현상을 주의 깊게 본다."],
+  rebutQ:"대입 때문에 과목을 고르는 학생을 비난할 수 있는가.",
+  rebutA:"대입 유불리를 고려하는 건 자연스럽지만, 진로 없는 쏠림 선택은 평가에서 드러난다.",
+  final:"입학사정관으로서, 진로에서 나온 선택이 손해 보지 않으려면 대입과 평가에서 바꿔야 할 것은…",
+  ask:"대입이 과목 선택을 좌우한다면, 고교학점제가 말하는 학생 주도성은 어디에 남는가?"},
+ {id:"office",em:"🏛️",name:"교육청 담당자",color:"#2E7D3E",
+  stance:"학교 한 곳이 다 개설할 수 없으니, 학교 간 공동교육과정과 온라인학교와 지역 자원으로 함께 채워야 한다.",
+  reasons:["소규모 학교에서는 소수 선택 과목을 학교 단독으로 개설하기 어렵다.","공동교육과정, 온라인학교, 학교 밖 교육으로 과목 선택의 폭을 넓히고 교육자원을 공유한다.","이수 기준과 최소 성취수준 보장지도로 선택한 과목을 끝까지 이수하도록 지원한다."],
+  rebutQ:"이동과 시간표 조정 부담이 학생과 학교로 넘어간다.",
+  rebutA:"원격 수업과 거점 운영 같은 방식으로 부담을 줄이는 방법을 계속 찾고 있지만 한계는 남아 있다.",
+  final:"교육청으로서, 모든 학교에서 학생의 선택을 받쳐 주려고 준비해야 할 것은…",
+  ask:"교육청이 모든 학교에 같은 선택권을 보장하려면 무엇을 더 준비해야 할까?"}
+];
+var STEPS=[["안내: 카드 받기, 질문 확인",120],["조별 준비: 발표자 2, 기록자 1",300],["입장 발표: 조당 1분 30초",450],["자유 반론: 다른 입장에게 질문",240],["마무리 질문: 학생 주도성은 어떻게 기를 것인가?",300]];
+var FINALQ="그렇다면, 학생 주도성은 어떻게 기를 것인가?";
+
+var st={tab:"me",mode:"group",role:null,checks:{},spin:null,finalOpen:false,answer:""};
+try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s){st.mode=s.mode||"group";st.role=s.role||null;st.checks=s.checks||{};st.answer=s.answer||"";st.finalOpen=!!s.finalOpen}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({mode:st.mode,role:st.role,checks:st.checks,answer:st.answer,finalOpen:st.finalOpen}))}catch(e){}}
+function byId(id){return ROLES.filter(function(r){return r.id===id})[0]}
+function rnd(n){try{var a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n}catch(e){return Math.floor(Math.random()*n)}}
+
+/* timer state */
+var tm={i:0,left:STEPS[0][1],run:false,t:null,end:0,custom:null};
+function fmt(sec){sec=Math.max(0,Math.ceil(sec));var m=Math.floor(sec/60),s=sec%60;return m+":"+(s<10?"0":"")+s}
+
+function cardHtml(r,withMission){
+  var m="";
+  if(withMission){
+    var c=st.checks;
+    m='<div class="mission"><h3>우리 조가 정할 것</h3>'+
+     ['발표자 2명 정하기','기록자 1명 정하기','근거 두 가지 고르기'].map(function(t,i){return '<label><input type="checkbox" data-a="chk" data-k="'+i+'"'+(c[i]?" checked":"")+'><span>'+t+'</span></label>'}).join("")+
+     '<p class="tpl"><b>발표 틀(1분 30초)</b><br>"저희는 '+r.name+' 입장입니다. 우리의 생각은 ~입니다. 근거는 첫째 ~, 둘째 ~입니다. 그래서 ~를 제안합니다."</p></div>';
+  }
+  return '<div class="card"><div class="card-h" style="background:'+r.color+'"><div class="em">'+r.em+'</div><div class="rn">'+r.name+'</div><div class="rs">내가 맡은 입장</div></div><div class="card-b">'+
+   '<div class="sec"><h3>한 줄 입장</h3><div class="stance">'+r.stance+'</div></div>'+
+   '<div class="sec"><h3>근거</h3><ul>'+r.reasons.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div>'+
+   '<div class="sec"><h3>이런 반론이 나오면</h3><div class="rb"><p><b>반론</b> '+r.rebutQ+'</p><p><b>대응</b> '+r.rebutA+'</p></div></div>'+
+   '<div class="sec"><h3>다른 조에게 던질 질문</h3><div class="ask">'+r.ask+'</div></div>'+
+   '</div></div>'+m;
+}
+
+function viewMe(){
+  var h='<div class="seg2" role="group" aria-label="역할 받는 방법"><button data-a="mode" data-m="group" class="'+(st.mode==="group"?"on":"")+'">조 번호로 받기</button><button data-a="mode" data-m="rand" class="'+(st.mode==="rand"?"on":"")+'">무작위 뽑기</button></div>';
+  if(st.spin){
+    return h+'<div class="spin" id="spin" aria-live="polite">'+st.spin+'</div>';
+  }
+  if(st.role){
+    var r=byId(st.role);
+    var fin='<div class="final"><button class="fin-h" data-a="fin" aria-expanded="'+st.finalOpen+'"><span>마지막 라운드</span><b>'+FINALQ+'</b><em>'+(st.finalOpen?"접기":"토론이 끝나면 열기")+'</em></button>';
+    if(st.finalOpen){
+      fin+='<div class="fin-b"><p class="hint" style="margin-top:0">지금까지는 제도의 어려움을 살폈어요. 이제 <b>해결하는 쪽</b>으로 돌아서 봅니다. 아래 셋 중 어디에서 시작할지 정하고, 내 역할이 할 수 있는 일을 한 줄로 써 보세요.</p>'+
+       '<ul class="lens"><li><b>선택할 기회</b> 스스로 고를 수 있게</li><li><b>책임지는 경험</b> 결과를 겪고 돌아보게</li><li><b>함께 받쳐 주는 장치</b> 혼자 두지 않게</li></ul>'+
+       '<div class="ask" style="margin-top:10px">'+r.final+'</div>'+
+       '<textarea id="ans" class="ans" placeholder="여기에 한 줄로 써 보세요" rows="3">'+(st.answer||"").replace(/</g,"&lt;")+'</textarea>'+
+       '<div class="row"><button class="btn" data-a="copyans">내 답 복사</button></div></div>';
+    }
+    fin+='</div>';
+    return h+cardHtml(r,true)+fin+'<div class="row"><button class="btn" data-a="reset">역할 다시 받기</button></div>';
+  }
+  if(st.mode==="group"){
+    h+='<p class="hint">우리 조 번호를 누르세요. 같은 조는 같은 역할을 받아요. 조가 5개면 1~5번을 쓰고, 그보다 많으면 역할이 겹칩니다.</p><div class="nums">';
+    for(var i=1;i<=10;i++)h+='<button data-a="grp" data-n="'+i+'">'+i+'</button>';
+    return h+'</div>';
+  }
+  return h+'<p class="hint">버튼을 누르면 5개 역할 중 하나가 무작위로 나와요. 한 조 안에서 서로 다른 역할이 나올 수 있으니 조원끼리 역할을 맞바꿔도 좋아요.</p><button class="draw" data-a="draw">🎲 역할 카드 뽑기</button>';
+}
+
+function viewTimer(){
+  var cur=STEPS[tm.i],total=cur[1],pct=Math.max(0,Math.min(100,(1-tm.left/total)*100));
+  var list=STEPS.map(function(x,i){return '<li class="'+(i===tm.i?"on":i<tm.i?"done":"")+'"><span>'+x[0]+'</span><span>'+fmt(x[1])+'</span></li>'}).join("");
+  return '<div class="clock"><div class="ph">'+cur[0]+'</div><div class="tm'+(tm.left<=10&&tm.run?" warn":"")+'" id="tm">'+fmt(tm.left)+'</div><div class="bar"><b id="bar" style="width:'+pct+'%"></b></div></div>'+
+   '<div class="row" style="justify-content:center">'+
+   '<button class="btn pri" data-a="tgo">'+(tm.run?"일시정지":"시작")+'</button>'+
+   '<button class="btn" data-a="tprev">이전</button><button class="btn" data-a="tnext">다음 단계</button><button class="btn" data-a="t90">발언 90초</button></div>'+
+   (tm.i===STEPS.length-1?'<div class="finq">'+FINALQ+'</div>':'')+'<ul class="steps">'+list+'</ul>'+
+   '<p class="hint">교사 화면에 띄워서 진행하세요. 마지막 10초는 붉은 숫자로 바뀌어요.</p>';
+}
+
+function viewAll(){
+  return '<p class="hint">토론이 끝난 뒤에 열어 보세요. 다른 입장이 어떤 근거를 가졌는지 확인할 수 있어요.</p>'+ROLES.map(function(r){
+    return '<details class="all"><summary><span class="dot" style="background:'+r.color+'"></span>'+r.em+' '+r.name+'</summary><div class="card-b"><div class="sec"><h3>한 줄 입장</h3><div class="stance" style="font-size:16px">'+r.stance+'</div></div>'+
+     '<div class="sec"><h3>근거</h3><ul>'+r.reasons.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul></div>'+
+     '<div class="sec"><h3>던질 질문</h3><div class="ask">'+r.ask+'</div></div></div></details>';
+  }).join("");
+}
+
+var $tabs=document.getElementById("tabs"),$view=document.getElementById("view");
+function render(){
+  $tabs.innerHTML=[["me","내 역할"],["timer","진행 타이머"],["all","전체 카드"]].map(function(t){return '<button class="tab'+(st.tab===t[0]?" on":"")+'" data-a="tab" data-t="'+t[0]+'">'+t[1]+'</button>'}).join("");
+  $view.innerHTML='<div class="panel">'+(st.tab==="me"?viewMe():st.tab==="timer"?viewTimer():viewAll())+'</div>';
+}
+
+/* timer engine */
+function tick(){
+  var left=(tm.end-Date.now())/1000;
+  if(left<=0){tm.left=0;tm.run=false;clearInterval(tm.t);try{if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}if(st.tab==="timer")render();return}
+  tm.left=left;
+  var el=document.getElementById("tm"),bar=document.getElementById("bar");
+  if(el){el.textContent=fmt(left);el.className="tm"+(left<=10?" warn":"")}
+  if(bar){var tot=tm.custom||STEPS[tm.i][1];bar.style.width=Math.min(100,(1-left/tot)*100)+"%"}
+}
+function tstart(){if(tm.left<=0)return;tm.end=Date.now()+tm.left*1000;tm.run=true;clearInterval(tm.t);tm.t=setInterval(tick,250)}
+function tstop(){tm.run=false;clearInterval(tm.t)}
+function tset(i){tstop();tm.i=Math.max(0,Math.min(STEPS.length-1,i));tm.left=STEPS[tm.i][1];tm.custom=null}
+
+function draw(){
+  var n=0,seq=ROLES.map(function(r){return r.em+" "+r.name});
+  var final=rnd(ROLES.length);
+  st.spin=seq[0];render();
+  var iv=setInterval(function(){
+    n++;
+    if(n<14){st.spin=seq[rnd(seq.length)];var el=document.getElementById("spin");if(el)el.textContent=st.spin}
+    else{clearInterval(iv);st.spin=null;st.role=ROLES[final].id;st.checks={};save();render()}
+  },90);
+}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-a]");if(!t)return;
+  var a=t.getAttribute("data-a");
+  if(a==="chk")return;
+  if(a==="tab"){st.tab=t.getAttribute("data-t")}
+  else if(a==="mode"){if(st.spin)return;st.mode=t.getAttribute("data-m");st.role=null;st.checks={};save()}
+  else if(a==="grp"){var n=+t.getAttribute("data-n");st.role=ROLES[(n-1)%ROLES.length].id;st.checks={};save()}
+  else if(a==="draw"){draw();return}
+  else if(a==="reset"){st.role=null;st.checks={};st.finalOpen=false;save()}
+  else if(a==="fin"){st.finalOpen=!st.finalOpen;save()}
+  else if(a==="copyans"){var v=(document.getElementById("ans")||{}).value||st.answer||"";try{navigator.clipboard.writeText(v)}catch(e){}return}
+  else if(a==="tgo"){if(tm.run)tstop();else tstart()}
+  else if(a==="tnext"){tset(tm.i+1)}
+  else if(a==="tprev"){tset(tm.i-1)}
+  else if(a==="t90"){tstop();tm.custom=90;tm.left=90;tstart()}
+  render();
+});
+document.addEventListener("input",function(e){if(e.target&&e.target.id==="ans"){st.answer=e.target.value;save()}});
+document.addEventListener("change",function(e){
+  var t=e.target;if(t.getAttribute&&t.getAttribute("data-a")==="chk"){st.checks[t.getAttribute("data-k")]=t.checked;save()}
+});
+render();
+})();
+</script>
+</body>
+</html>

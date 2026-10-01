@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>192학점 시간표 짜기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EEF1F7; --paper:#FFFFFF; --ink:#16223B; --ink2:#55627E; --line:#D3DAE8; --grid:rgba(22,34,59,.055);
+  --hl:#FFE566; --hl-soft:#FFF4B8; --hl-edge:#E2C200;
+  --ok:#1B8A57; --bad:#D22B45; --warn:#A86200;
+  --common:#2D4373; --chtae:#95A0B8;
+  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+    --hl-soft:#3B3618; --hl-edge:#C9A92A;
+    --ok:#4CC58C; --bad:#FF6B81; --warn:#F0B44C;
+    --common:#6B86C9; --chtae:#66728C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+  --hl-soft:#3B3618; --hl-edge:#C9A92A;
+  --ok:#4CC58C; --bad:#FF6B81; --warn:#F0B44C;
+  --common:#6B86C9; --chtae:#66728C;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{
+  margin:0;background-color:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;
+  -webkit-text-size-adjust:100%;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--hl-edge);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:18px 14px 110px}
+h1,h2,h3{margin:0}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9vw,52px);line-height:1.12;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.25}
+h3{font-size:15px;font-weight:700}
+.lead{font-size:16px;color:var(--ink2);margin:12px 0 0;max-width:34em}
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:16px}
+.card ul{margin:8px 0 0;padding-left:1.15em}
+.card li{margin:6px 0}
+.card li b{background:linear-gradient(transparent 58%,var(--hl) 58%)}
+
+/* persona */
+.pgrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+@media(min-width:560px){.pgrid{grid-template-columns:1fr 1fr}}
+.pcard{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--ink);border-radius:12px;padding:12px 14px;box-shadow:3px 3px 0 var(--ink)}
+.pcard:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.pcard .pn{font-family:var(--display);font-size:24px;line-height:1.2}
+.pcard .pt{font-weight:700;font-size:14px;color:var(--ink2)}
+.pcard .pd{font-size:14px;margin-top:4px}
+
+/* dock */
+.dock{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1.5px solid var(--ink);box-shadow:0 6px 14px -10px rgba(0,0,0,.35)}
+.dock-in{max-width:720px;margin:0 auto;padding:8px 14px 0}
+.dock-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.who{min-width:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who b{font-family:var(--display);font-weight:400;font-size:18px;margin-right:6px}
+.who span{color:var(--ink2)}
+.rules-btn{border:1.5px solid var(--ink);background:var(--paper);border-radius:99px;padding:3px 12px;font-size:13px;font-weight:700;white-space:nowrap}
+.rules-btn.done{background:var(--hl);color:#16223B}
+.bar{display:flex;height:16px;margin-top:8px;border:1.5px solid var(--ink);border-radius:5px;overflow:hidden;background:var(--paper)}
+.seg{display:block;min-width:0;border-right:1px solid var(--paper)}
+.seg.empty{background:repeating-linear-gradient(135deg,transparent 0 5px,var(--line) 5px 6px)}
+.bar-cap{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink2);margin-top:3px}
+.bar-cap b{color:var(--ink)}
+.rules{list-style:none;margin:8px 0 0;padding:8px 0 4px;border-top:1px dashed var(--line);display:grid;gap:4px}
+.rl{display:grid;grid-template-columns:22px 1fr auto;gap:6px;font-size:13.5px;align-items:baseline}
+.rl .ic{font-weight:700;text-align:center}
+.rl em{font-style:normal;color:var(--ink2);font-variant-numeric:tabular-nums}
+.rl small{grid-column:2 / 4;color:var(--ink2);font-size:12.5px}
+.rl.ok .ic{color:var(--ok)} .rl.bad .ic{color:var(--bad)} .rl.warn .ic{color:var(--warn)} .rl.todo .ic{color:var(--ink2)}
+.rl.bad span{color:var(--bad);font-weight:700}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:8px 0 8px;margin-top:2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--paper);border-radius:99px;padding:4px 11px;font-size:14px}
+.tab::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.tab i{font-style:normal;font-size:12px;font-weight:700;background:var(--c);color:#fff;border-radius:99px;padding:0 6px}
+.tab.on{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+
+/* brief */
+.brief{margin-top:14px;background:var(--paper);border:1.5px solid var(--line);border-left:6px solid var(--ink);border-radius:8px;padding:10px 14px}
+.brief .bt{font-weight:700}
+.brief p{margin:2px 0 0;font-size:14px}
+.brief .tw{color:var(--ink2)}
+
+/* courses */
+.tnote{font-size:13.5px;color:var(--ink2);margin:14px 0 0}
+.tsec{margin-top:18px}
+.tsec .td{margin:1px 0 8px;font-size:13px;color:var(--ink2)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.course{position:relative;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;min-height:66px;user-select:none;-webkit-user-select:none}
+.course .cn{font-weight:700;font-size:14.5px;line-height:1.3;word-break:keep-all}
+.course .cm{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:5px;font-size:12px;color:var(--ink2)}
+.course.sel{background:var(--hl-soft);border-color:var(--hl-edge);border-width:2px;padding:8.5px 9.5px}
+.course.sel::after{content:"✓";position:absolute;right:8px;top:5px;font-weight:700;color:var(--ink)}
+.course.locked:not(.sel){border-style:dashed;color:var(--ink2)}
+.tg{border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:11.5px;line-height:1.55;background:var(--bg)}
+.tg.lock{border-color:var(--warn);color:var(--warn)}
+.tg.route{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.step{display:flex;align-items:center;gap:6px}
+.step button{width:28px;height:28px;border:1.5px solid var(--ink);background:var(--paper);border-radius:50%;line-height:1;font-size:16px;padding:0}
+.step b{color:var(--ink);font-size:13px;min-width:3.2em;text-align:center}
+
+/* bottom bar */
+.fab{position:fixed;left:0;right:0;bottom:0;z-index:15;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 40%)}
+.fab-in{max-width:720px;margin:0 auto;display:flex;gap:8px}
+.btn{border:1.5px solid var(--ink);background:var(--paper);border-radius:10px;padding:10px 16px;font-weight:700;font-size:15px}
+.btn.pri{background:var(--hl);color:#16223B;box-shadow:3px 3px 0 var(--ink)}
+.btn.pri:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.ink{background:var(--ink);color:var(--paper)}
+.btn.grow{flex:1}
+.btn.sm{padding:6px 12px;font-size:13.5px}
+
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,16,30,.55)}
+.sheet[hidden]{display:none}
+.sheet-in{width:100%;max-width:720px;max-height:90%;overflow:auto;background:var(--paper);border:1.5px solid var(--ink);border-bottom:0;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet h2{font-size:21px}
+.sheet p{margin:6px 0 0;font-size:14px;color:var(--ink2)}
+.route{display:block;width:100%;text-align:left;margin-top:10px;background:var(--bg);border:1.5px solid var(--ink);border-radius:10px;padding:10px 12px}
+.route b{font-size:15.5px}
+.route span{display:block;font-size:13.5px;color:var(--ink2);margin-top:2px}
+
+/* report */
+.cells{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;margin-top:10px}
+.cells i{aspect-ratio:1;border-radius:2px;display:block}
+.cells i.e{background:repeating-linear-gradient(135deg,transparent 0 3px,var(--line) 3px 4px);outline:1px solid var(--line);outline-offset:-1px}
+.brk{display:grid;gap:5px;margin-top:10px}
+.brow{display:grid;grid-template-columns:82px 1fr 34px;gap:8px;align-items:center;font-size:13.5px}
+.brow .lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:12px;background:var(--bg);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.track b{display:block;height:100%}
+.brow em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{border:1.5px solid var(--line);border-radius:99px;padding:3px 11px;font-size:13.5px;background:var(--paper)}
+.chip.got{background:var(--hl-soft);border-color:var(--hl-edge);font-weight:700}
+.chip.miss{border-style:dashed;color:var(--ink2)}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.q{margin:8px 0 0;padding-left:1.2em}
+.q li{margin:6px 0}
+textarea.sum{width:100%;min-height:150px;margin-top:8px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:13.5px/1.6 var(--font);padding:10px;resize:vertical}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:99px;font-size:14px;z-index:60}
+.toast[hidden]{display:none}
+.foot{margin-top:22px;font-size:12.5px;color:var(--ink2)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheet" class="sheet" hidden></div>
+<div id="toast" class="toast" hidden></div>
+<noscript>이 페이지는 JavaScript가 필요해요.</noscript>
+
+<script>
+(function(){
+"use strict";
+var KEY="hakjeom-sim-v1";
+
+var GROUPS=[
+  {id:"kor",label:"국어",color:"#D95D39",cls:"core",note:"국·영·수는 공통과목 24학점을 포함해 81학점을 넘길 수 없어요."},
+  {id:"math",label:"수학",color:"#2F6DB5",cls:"core",note:"국·영·수는 공통과목 24학점을 포함해 81학점을 넘길 수 없어요."},
+  {id:"eng",label:"영어",color:"#2A9D8F",cls:"core",note:"국·영·수는 공통과목 24학점을 포함해 81학점을 넘길 수 없어요."},
+  {id:"soc",label:"사회",color:"#E0A030",cls:"soc",note:"융합선택은 절대평가라서 점수 유불리만 보고 고르기 쉬워요. 꼭 필요한 과목을 놓치지 않는지 살펴보세요."},
+  {id:"sci",label:"과학",color:"#7A55B0",cls:"sci",note:"융합선택은 절대평가라서 점수 유불리만 보고 고르기 쉬워요. 꼭 필요한 과목을 놓치지 않는지 살펴보세요."},
+  {id:"pe",label:"체육",color:"#3E9B4F",cls:"pe",note:"체육은 최소 10학점을 채워야 해요."},
+  {id:"art",label:"예술",color:"#D6407E",cls:"art",note:"예술은 최소 10학점을 채워야 해요."},
+  {id:"tech",label:"기술·가정/정보",color:"#2F8497",cls:"life",note:"기술·가정/정보, 제2외국어/한문, 교양을 합쳐 최소 16학점을 채워야 해요."},
+  {id:"lang",label:"제2외국어/한문",color:"#9A7443",cls:"life",note:"제2외국어는 8개 언어가 각각 개설될 수 있어요. 여기서는 '제2외국어 회화'처럼 묶어서 보여 줘요. 기술·가정/정보, 제2외국어/한문, 교양을 합쳐 최소 16학점이에요."},
+  {id:"cult",label:"교양",color:"#7F8CA3",cls:"life",note:"기술·가정/정보, 제2외국어/한문, 교양을 합쳐 최소 16학점을 채워야 해요."}
+];
+var TYPES=[
+  ["일반","일반선택","교과별 학문 영역의 주요 학습 내용을 이해하고 탐구하는 과목"],
+  ["진로","진로선택","교과별 심화 학습과 진로에 관련된 과목"],
+  ["융합","융합선택","교과 안팎의 주제를 융합하고 실생활에 응용하는 과목"]
+];
+var RAW={
+  kor:{"일반":"화법과 언어,독서와 작문,문학","진로":"주제 탐구 독서,문학과 영상,직무 의사소통","융합":"독서 토론과 글쓰기,매체 의사소통,언어생활 탐구"},
+  math:{"일반":"대수,미적분Ⅰ,확률과 통계","진로":"기하,미적분Ⅱ,경제 수학,인공지능 수학,직무 수학","융합":"수학과 문화,실용 통계,수학과제 탐구"},
+  eng:{"일반":"영어Ⅰ,영어Ⅱ,영어 독해와 작문","진로":"영미 문학 읽기,영어 발표와 토론,심화 영어,심화 영어 독해와 작문,직무 영어","융합":"실생활 영어 회화,미디어 영어,세계 문화와 영어"},
+  soc:{"일반":"세계시민과 지리,세계사,사회와 문화,현대사회와 윤리","진로":"한국지리 탐구,도시의 미래 탐구,동아시아 역사 기행,정치,법과 사회,경제,윤리와 사상,인문학과 윤리,국제 관계의 이해","융합":"여행지리,역사로 탐구하는 현대 세계,사회문제 탐구,금융과 경제생활,윤리문제 탐구,기후변화와 지속가능한 세계"},
+  sci:{"일반":"물리학,화학,생명과학,지구과학","진로":"역학과 에너지,전자기와 양자,물질과 에너지,화학 반응의 세계,세포와 물질대사,생물의 유전,지구시스템과학,행성우주과학","융합":"과학의 역사와 문화,기후변화와 환경생태,융합과학 탐구"},
+  pe:{"일반":"체육1,체육2","진로":"운동과 건강,스포츠 문화,스포츠 과학","융합":"스포츠 생활1,스포츠 생활2"},
+  art:{"일반":"음악,미술,연극","진로":"음악 연주와 창작,음악 감상과 비평,미술 창작,미술 감상과 비평","융합":"음악과 미디어,미술과 매체"},
+  tech:{"일반":"기술·가정,정보","진로":"로봇과 공학세계,생활과학 탐구,인공지능 기초,데이터 과학","융합":"창의 공학 설계,지식 재산 일반,생애 설계와 자립,아동발달과 부모,소프트웨어와 생활"},
+  lang:{"일반":"독일어,프랑스어,스페인어,중국어,일본어,러시아어,아랍어,베트남어,한문","진로":"제2외국어 회화,심화 제2외국어,한문 고전 읽기","융합":"제2외국어권 문화,언어생활과 한자"},
+  cult:{"일반":"진로와 직업,생태와 환경","진로":"인간과 철학,논리와 사고,인간과 심리,교육의 이해,삶과 종교,보건","융합":"인간과 경제활동,논술"}
+};
+var SMALL2={"스포츠 문화":1,"스포츠 과학":1,"생애 설계와 자립":1};
+var LOCKED=("기하,미적분Ⅱ,인공지능 수학,경제 수학,전자기와 양자,행성우주과학,지구시스템과학,로봇과 공학세계,데이터 과학,미술과 매체,미술 감상과 비평,교육의 이해,아동발달과 부모,경제,법과 사회,영미 문학 읽기,직무 영어,일본어,러시아어,아랍어,베트남어,독일어,프랑스어,스페인어,제2외국어 회화,심화 제2외국어").split(",");
+var PRE={"미적분Ⅱ":"미적분Ⅰ","영어Ⅱ":"영어Ⅰ","역학과 에너지":"물리학","전자기와 양자":"물리학","물질과 에너지":"화학","화학 반응의 세계":"화학","세포와 물질대사":"생명과학","생물의 유전":"생명과학","지구시스템과학":"지구과학","행성우주과학":"지구과학","한문 고전 읽기":"한문","음악 연주와 창작":"음악","음악 감상과 비평":"음악","미술 창작":"미술","미술 감상과 비평":"미술"};
+var ROUTE={
+  joint:{name:"공동교육과정",desc:"인근 학교와 함께 개설해요. 학점 이수 기준과 추가학습이 학교 안 수업과 같이 적용돼요."},
+  online:{name:"온라인학교",desc:"실시간 원격 수업으로 들어요. 학점 이수 기준과 추가학습이 적용돼요."},
+  outside:{name:"학교 밖 교육",desc:"지역 대학·기관의 강좌를 들어요. 성적이 산출되지 않고, 출석이 모자라도 추가학습 기회를 주기 어려워요."}
+};
+var PERSONAS=[
+  {id:"robot",emoji:"🤖",name:"하준",title:"로봇공학자가 꿈",desc:"기계 만들기와 코딩이 좋고 수학·물리도 즐거워요. 공대 진학을 생각하고 있어요.",twist:"수학·과학 심화 과목 일부가 우리 학교에 없어요.",need:["미적분Ⅰ","미적분Ⅱ","기하","물리학","역학과 에너지","전자기와 양자","인공지능 기초","데이터 과학","로봇과 공학세계"]},
+  {id:"webtoon",emoji:"🎨",name:"지우",title:"웹툰 작가 지망",desc:"그림도 이야기도 좋아해요. 만화·콘텐츠 계열 진학을 생각해요.",twist:"미술 심화 과목이 학교에 다 개설되어 있지 않아요.",need:["미술","미술 창작","미술 감상과 비평","미술과 매체","문학","문학과 영상","매체 의사소통","소프트웨어와 생활","인간과 심리"]},
+  {id:"teacher",emoji:"📚",name:"민준",title:"국어교사가 꿈",desc:"사범대 진학을 희망해요. 사람과 교육에 관심이 많아요.",twist:"교육·아동 관련 과목이 학교에 없어요.",need:["화법과 언어","독서와 작문","문학","교육의 이해","인간과 심리","인간과 철학","아동발달과 부모","사회문제 탐구"]},
+  {id:"econ",emoji:"📈",name:"유나",title:"경제·경영 계열 희망",desc:"숫자와 사회 현상이 재미있어요.",twist:"경제 관련 과목이 학교에 부족해요.",need:["경제","경제 수학","금융과 경제생활","확률과 통계","실용 통계","미적분Ⅰ","인간과 경제활동","영어 발표와 토론"]},
+  {id:"space",emoji:"🔭",name:"도윤",title:"우주를 좋아하는 학생",desc:"별과 행성이 좋아서 천문학자를 생각해요.",twist:"천문·지구과학 심화 과목이 학교에 없어요.",need:["지구과학","물리학","행성우주과학","지구시스템과학","역학과 에너지","융합과학 탐구","기후변화와 환경생태"]},
+  {id:"undecided",emoji:"🧭",name:"서연",title:"아직 잘 모르겠어요",desc:"하고 싶은 게 뭔지 아직 못 찾았어요.",twist:"정답이 없는 학생이에요. 여러 교과군을 넓게 걸쳐 탐색해 보세요.",need:["진로와 직업","논리와 사고","인간과 심리","사회문제 탐구","융합과학 탐구","수학과제 탐구","기후변화와 지속가능한 세계"]},
+  {id:"me",emoji:"🙋",name:"나",title:"내가 고1이라면",desc:"정해진 학생 없이, 내 기준으로 짜 봐요.",twist:"내가 보내고 싶은 3년을 떠올려 보세요.",need:[]}
+];
+var REASONS=["진로·적성","흥미","내신 유리(절대평가·수강자 수)","대입 유불리","친구가 듣는 과목","학교에 개설된 과목만 고를 수 있어서","선배·교사의 조언"];
+
+var COURSES=[],BY={},NAME2ID={};
+GROUPS.forEach(function(g){
+  TYPES.forEach(function(t){
+    RAW[g.id][t[0]].split(",").forEach(function(n){
+      var b=4,mn=3,mx=5;
+      if(SMALL2[n]){b=2;mn=1;mx=2}
+      else if(g.id==="pe"||g.id==="art"||g.id==="cult"){b=3;mn=2;mx=4}
+      var ev="rel";
+      if((g.id==="soc"||g.id==="sci")&&t[0]==="융합")ev="abs";
+      else if(g.id==="pe"||g.id==="art")ev="abc";
+      else if(g.id==="cult")ev="p";
+      var c={id:g.id+"|"+n,g:g.id,name:n,type:t[0],base:b,min:mn,max:mx,ev:ev,locked:LOCKED.indexOf(n)>-1};
+      COURSES.push(c);BY[c.id]=c;NAME2ID[n]=c.id;
+    });
+  });
+});
+
+var state={step:"intro",persona:null,picks:{},tab:"kor",reasons:[],rulesOpen:false};
+var sheetFor=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&typeof s==="object"&&s.picks){Object.keys(s.picks).forEach(function(k){if(!BY[k])delete s.picks[k]});state=Object.assign(state,s)}}catch(e){}}
+function persona(){return PERSONAS.filter(function(p){return p.id===state.persona})[0]||PERSONAS[PERSONAS.length-1]}
+function hasName(n){return Object.keys(state.picks).some(function(id){return BY[id]&&BY[id].name===n})}
+
+function calc(){
+  var by={};GROUPS.forEach(function(g){by[g.id]=0});
+  var S=0,n=0,ev={rel:0,abs:0,abc:0,p:0},routes=[];
+  Object.keys(state.picks).forEach(function(id){
+    var c=BY[id],p=state.picks[id];if(!c)return;
+    by[c.g]+=p.credit;S+=p.credit;n++;ev[c.ev]++;
+    if(p.route)routes.push({c:c,route:p.route});
+  });
+  var core=by.kor+by.math+by.eng,life=by.tech+by.lang+by.cult;
+  var viol=[];
+  Object.keys(state.picks).forEach(function(id){
+    var c=BY[id];if(!c)return;
+    var pre=PRE[c.name];
+    if(pre&&!hasName(pre))viol.push(c.name+" ← "+pre+" 먼저");
+  });
+  var rules=[
+    {k:"total",label:"총 192학점 채우기 (선택 126학점)",cur:(66+S)+"/192",st:S===126?"ok":(S<126?"todo":"bad")},
+    {k:"pe",label:"체육 10학점 이상",cur:by.pe+"/10",st:by.pe>=10?"ok":"todo"},
+    {k:"art",label:"예술 10학점 이상",cur:by.art+"/10",st:by.art>=10?"ok":"todo"},
+    {k:"life",label:"기술·가정/정보/제2외국어/한문/교양 16학점 이상",cur:life+"/16",st:life>=16?"ok":"todo"},
+    {k:"kes",label:"국·영·수 81학점 이하 (공통 24학점 포함)",cur:(24+core)+"/81",st:(24+core)<=81?"ok":"bad"},
+    {k:"bal",label:"사회·과학 균형 (권고)",cur:"사회 "+by.soc+" · 과학 "+by.sci,st:(by.soc>0&&by.sci>0)?"ok":"warn",soft:true},
+    {k:"hier",label:"과목 위계 순서 (권고)",cur:viol.length+"건",st:viol.length?"warn":"ok",soft:true,sub:viol.join(", ")}
+  ];
+  return {by:by,S:S,n:n,ev:ev,routes:routes,core:core,life:life,rules:rules,
+    okN:rules.filter(function(r){return !r.soft&&r.st==="ok"}).length,
+    done:rules.filter(function(r){return !r.soft&&r.st!=="ok"}).length===0};
+}
+
+function icon(st){return st==="ok"?"✓":st==="bad"?"✕":st==="warn"?"!":"○"}
+
+/* ---------- views ---------- */
+function viewIntro(){
+  var cards=PERSONAS.map(function(p){
+    return '<button class="pcard" data-act="persona" data-id="'+p.id+'"><div class="pn">'+p.emoji+" "+p.name+'</div><div class="pt">'+p.title+'</div><div class="pd">'+p.desc+'</div></button>';
+  }).join("");
+  return '<div class="wrap"><h1>192학점<br>시간표 짜기</h1>'+
+  '<p class="lead">고교학점제에서는 학생이 과목을 고르고, 학교와 제도는 그 선택을 받쳐 줍니다. 한 학생의 3년 시간표를 직접 짜면서 그 구조를 체험해 보세요.</p>'+
+  '<div class="card"><h3>시작하기 전에</h3><ul>'+
+  '<li><b>공통과목 48학점</b>(국어·수학·영어·한국사·통합사회·통합과학·과학탐구실험)과 <b>창의적 체험활동 18학점</b>은 이미 채워져 있어요.</li>'+
+  '<li>남은 <b>126학점</b>을 선택과목으로 채웁니다. 체육 10, 예술 10, 기술·가정/정보/제2외국어/한문/교양 16학점은 최소한 채워야 하고, 국·영·수는 공통과목을 포함해 81학점을 넘길 수 없어요.</li>'+
+  '<li>이 가상의 학교는 규모가 작아서 일부 과목이 🔒 <b>미개설</b>이에요. 꼭 듣고 싶다면 공동교육과정, 온라인학교, 학교 밖 교육으로 수강할 수 있어요.</li></ul></div>'+
+  '<h2 style="margin-top:26px">누구의 시간표를 짤까요?</h2><div class="pgrid">'+cards+'</div>'+
+  '<p class="foot">2022 개정 교육과정 고등학교 편제와 이수 학점 기준을 단순화한 체험용 시뮬레이션이에요. 실제 편성은 학교 교육과정 편성·운영 지침과 학교 사정에 따라 달라집니다.</p></div>';
+}
+
+function courseCard(c){
+  var pk=state.picks[c.id],sel=!!pk,tags="";
+  if(c.locked)tags+='<span class="tg lock">🔒 미개설</span>';
+  if(c.ev==="abs")tags+='<span class="tg">절대평가</span>';
+  if(c.ev==="abc")tags+='<span class="tg">A·B·C</span>';
+  if(c.ev==="p")tags+='<span class="tg">P</span>';
+  if(sel&&pk.route)tags+='<span class="tg route">'+ROUTE[pk.route].name+'</span>';
+  var cr;
+  if(sel&&c.min!==c.max){
+    cr='<span class="step"><button data-act="dec" data-id="'+c.id+'" aria-label="학점 줄이기">−</button><b>'+pk.credit+'학점</b><button data-act="inc" data-id="'+c.id+'" aria-label="학점 늘리기">＋</button></span>';
+  }else{cr='<span>'+(sel?pk.credit:c.base)+'학점</span>'}
+  return '<div class="course'+(sel?" sel":"")+(c.locked?" locked":"")+'" role="button" tabindex="0" aria-pressed="'+sel+'" data-act="toggle" data-id="'+c.id+'"><div class="cn">'+c.name+'</div><div class="cm">'+cr+tags+'</div></div>';
+}
+
+function viewBuild(){
+  var r=calc(),p=persona();
+  var segs='<span class="seg" style="flex:48;background:var(--common)"></span>';
+  GROUPS.forEach(function(g){if(r.by[g.id])segs+='<span class="seg" style="flex:'+r.by[g.id]+';background:'+g.color+'"></span>'});
+  if(126-r.S>0)segs+='<span class="seg empty" style="flex:'+(126-r.S)+'"></span>';
+  segs+='<span class="seg" style="flex:18;background:var(--chtae)"></span>';
+
+  var rulesHtml="";
+  if(state.rulesOpen){
+    rulesHtml='<ul class="rules">'+r.rules.map(function(x){
+      return '<li class="rl '+x.st+'"><span class="ic">'+icon(x.st)+'</span><span>'+x.label+'</span><em>'+x.cur+'</em>'+(x.sub?'<small>'+x.sub+'</small>':'')+'</li>';
+    }).join("")+'</ul>';
+  }
+  var tabs=GROUPS.map(function(g){
+    return '<button class="tab'+(state.tab===g.id?" on":"")+'" data-act="tab" data-g="'+g.id+'" style="--c:'+g.color+'">'+g.label+(r.by[g.id]?'<i>'+r.by[g.id]+'</i>':'')+'</button>';
+  }).join("");
+  var g=GROUPS.filter(function(x){return x.id===state.tab})[0];
+  var body='<p class="tnote">'+g.note+'</p>';
+  TYPES.forEach(function(t){
+    var list=COURSES.filter(function(c){return c.g===g.id&&c.type===t[0]});
+    if(!list.length)return;
+    body+='<section class="tsec"><h3>'+t[1]+'</h3><p class="td">'+t[2]+'</p><div class="grid">'+list.map(courseCard).join("")+'</div></section>';
+  });
+  return '<header class="dock"><div class="dock-in">'+
+    '<div class="dock-top"><div class="who"><b>'+p.emoji+" "+p.name+'</b><span>'+p.title+'</span></div>'+
+    '<button class="rules-btn'+(r.done?" done":"")+'" data-act="rules" aria-expanded="'+state.rulesOpen+'">규칙 '+r.okN+'/5 '+(state.rulesOpen?"접기":"보기")+'</button></div>'+
+    '<div class="bar" role="img" aria-label="총 '+(66+r.S)+'학점 중 192학점">'+segs+'</div>'+
+    '<div class="bar-cap"><span>선택 <b>'+r.S+'</b> / 126학점</span><span>전체 <b>'+(66+r.S)+'</b> / 192학점</span></div>'+
+    rulesHtml+'<nav class="tabs" aria-label="교과군">'+tabs+'</nav></div></header>'+
+    '<div class="wrap" style="padding-top:0">'+
+    '<div class="brief"><div class="bt">'+p.emoji+" "+p.name+" · "+p.title+'</div><p>'+p.desc+'</p><p class="tw">고민: '+p.twist+'</p></div>'+
+    body+'</div>'+
+    '<div class="fab"><div class="fab-in"><button class="btn sm" data-act="home">학생 바꾸기</button><button class="btn pri grow" data-act="report">'+(r.done?"내 시간표 리포트 보기":"리포트 미리 보기")+'</button></div></div>';
+}
+
+function viewReport(){
+  var r=calc(),p=persona();
+  var cells=[],i;
+  for(i=0;i<48;i++)cells.push("background:var(--common)");
+  GROUPS.forEach(function(g){for(i=0;i<r.by[g.id];i++)cells.push("background:"+g.color)});
+  for(i=0;i<Math.max(0,126-r.S);i++)cells.push("");
+  for(i=0;i<18;i++)cells.push("background:var(--chtae)");
+  var cellHtml=cells.map(function(s){return s?'<i style="'+s+'"></i>':'<i class="e"></i>'}).join("");
+
+  var rows='<div class="brow"><span class="lb">공통과목</span><div class="track"><b style="width:100%;background:var(--common)"></b></div><em>48</em></div>';
+  GROUPS.forEach(function(g){
+    var v=r.by[g.id];
+    rows+='<div class="brow"><span class="lb">'+g.label+'</span><div class="track"><b style="width:'+Math.min(100,v/24*100)+'%;background:'+g.color+'"></b></div><em>'+v+'</em></div>';
+  });
+  rows+='<div class="brow"><span class="lb">창의적 체험</span><div class="track"><b style="width:100%;background:var(--chtae)"></b></div><em>18</em></div>';
+
+  var ruleHtml='<ul class="rules" style="border:0;padding-top:0">'+r.rules.map(function(x){
+    return '<li class="rl '+x.st+'"><span class="ic">'+icon(x.st)+'</span><span>'+x.label+'</span><em>'+x.cur+'</em>'+(x.sub?'<small>'+x.sub+'</small>':'')+'</li>';
+  }).join("")+'</ul>';
+
+  var fit="";
+  if(p.need.length){
+    var got=0;
+    var chips=p.need.map(function(nm){
+      var pk=state.picks[NAME2ID[nm]];
+      if(pk)got++;
+      return '<span class="chip '+(pk?"got":"miss")+'">'+(pk?"✓ ":"")+nm+(pk&&pk.route?" ("+ROUTE[pk.route].name+")":"")+'</span>';
+    }).join("");
+    fit='<div class="card"><h3>'+p.name+'의 진로와 맞는 정도: '+got+'/'+p.need.length+'과목</h3><div class="chips">'+chips+'</div>'+
+      '<p class="foot" style="margin-top:8px">'+(p.id==="undecided"?"서연은 정답이 없는 학생이에요. 위 목록은 탐색해 볼 만한 과목 예시일 뿐이고, 교과군을 얼마나 넓게 걸쳤는지가 더 중요해요.":"이 목록은 '이 학생에게 필요해 보이는 과목' 예시예요. 정답이 아니라 토론의 출발점으로 봐 주세요.")+'</p></div>';
+  }
+  var out="";
+  if(r.routes.length){
+    out='<div class="card"><h3>학교 밖으로 나가서 듣는 과목 '+r.routes.length+'개</h3><ul>'+r.routes.map(function(x){
+      return '<li><b>'+x.c.name+'</b> — '+ROUTE[x.route].name+'<br><span style="color:var(--ink2);font-size:13.5px">'+ROUTE[x.route].desc+'</span></li>';
+    }).join("")+'</ul></div>';
+  }
+  var total=r.n||1;
+  var evHtml='<div class="card"><h3>내가 고른 '+r.n+'과목의 평가 방식</h3><div class="chips">'+
+    '<span class="chip">5등급 상대평가 '+r.ev.rel+'과목</span><span class="chip">절대평가(A~E) '+r.ev.abs+'과목</span><span class="chip">A·B·C '+r.ev.abc+'과목</span><span class="chip">P(교양) '+r.ev.p+'과목</span></div>'+
+    '<p class="foot" style="margin-top:8px">절대평가 과목은 '+Math.round(r.ev.abs/total*100)+'%예요. 평가 방식이 과목 선택에 영향을 주었는지 돌아보세요.</p></div>';
+
+  var reasons=REASONS.map(function(x){
+    return '<button class="chip'+(state.reasons.indexOf(x)>-1?" on":"")+'" data-act="reason" data-r="'+x+'">'+x+'</button>';
+  }).join("");
+
+  return '<div class="wrap"><button class="btn sm" data-act="back">← 시간표로 돌아가기</button>'+
+   '<h1 style="margin-top:14px">'+p.emoji+" "+p.name+'의<br>3년 시간표</h1>'+
+   '<p class="lead">'+(r.done?"핵심 규칙 5개를 모두 채웠어요. 192학점 시간표 완성!":"아직 채우지 못한 규칙이 있어요. 돌아가서 이어서 짜도 되고, 이 상태로 토론해도 좋아요.")+'</p>'+
+   '<div class="card"><h3>192칸 학점 통장</h3><div class="cells" role="img" aria-label="학점 192칸 현황">'+cellHtml+'</div>'+
+   '<div class="brk">'+rows+'</div></div>'+
+   '<div class="card"><h3>규칙 점검 ('+r.okN+'/5)</h3>'+ruleHtml+'</div>'+
+   fit+out+evHtml+
+   '<div class="card"><h3>나는 어떤 기준으로 골랐나?</h3><p class="foot" style="margin-top:4px">해당하는 것을 모두 눌러 보세요.</p><div class="chips">'+reasons+'</div></div>'+
+   '<div class="card"><h3>옆 사람과 이야기해 보세요</h3><ol class="q">'+
+   '<li>이 학생이 3년 뒤 가장 아쉬워할 선택은 무엇일까요?</li>'+
+   '<li>학교에 없는 과목을 들으려면 학생은 어떤 비용(이동, 시간표, 성적 산출)을 치러야 할까요?</li>'+
+   '<li>교사가 된 내가 이 학생에게 어떤 정보와 상담을 줄 수 있어야 할까요?</li>'+
+   '<li>내가 고등학생 때 골랐던 과목과 오늘 고른 과목은 기준이 어떻게 다른가요?</li></ol></div>'+
+   '<div class="card"><h3>내 선택 요약</h3><textarea class="sum" id="sum" readonly>'+summary(r,p)+'</textarea>'+
+   '<div style="display:flex;gap:8px;margin-top:8px"><button class="btn ink sm" data-act="copy">요약 복사</button><button class="btn sm" data-act="home">다른 학생으로 다시 짜기</button></div></div>'+
+   '</div>';
+}
+
+function summary(r,p){
+  var g=GROUPS.filter(function(x){return r.by[x.id]}).map(function(x){return x.label+" "+r.by[x.id]}).join(", ");
+  var rt=r.routes.map(function(x){return x.c.name+"("+ROUTE[x.route].name+")"}).join(", ");
+  var lines=["[192학점 시간표] "+p.name+" ("+p.title+")",
+    "선택 "+r.n+"과목 "+r.S+"학점 / 전체 "+(66+r.S)+"학점 / 핵심 규칙 "+r.okN+"/5 충족",
+    "교과군별: "+(g||"아직 없음"),
+    "학교 밖 수강: "+(rt||"없음"),
+    "선택 기준: "+(state.reasons.length?state.reasons.join(", "):"(아직 고르지 않음)")];
+  return lines.join("\n");
+}
+
+function renderSheet(){
+  var el=document.getElementById("sheet");
+  if(!sheetFor){el.hidden=true;el.innerHTML="";return}
+  var c=BY[sheetFor];
+  el.hidden=false;
+  el.innerHTML='<div class="sheet-in" role="dialog" aria-modal="true" aria-label="수강 경로 선택">'+
+    '<h2>'+c.name+'</h2><p>이 과목은 우리 학교에 개설되어 있지 않아요. 어떤 방법으로 들을까요?</p>'+
+    ["joint","online","outside"].map(function(k){return '<button class="route" data-act="route" data-route="'+k+'"><b>'+ROUTE[k].name+'</b><span>'+ROUTE[k].desc+'</span></button>'}).join("")+
+    '<button class="btn sm" style="margin-top:12px" data-act="closesheet">이 과목은 담지 않을래요</button></div>';
+}
+
+function render(){
+  var tabs=document.querySelector(".tabs"),sl=tabs?tabs.scrollLeft:0;
+  var app=document.getElementById("app");
+  app.innerHTML=state.step==="intro"?viewIntro():state.step==="build"?viewBuild():viewReport();
+  var t2=document.querySelector(".tabs");if(t2)t2.scrollLeft=sl;
+  renderSheet();save();
+}
+
+function toast(msg){
+  var t=document.getElementById("toast");t.textContent=msg;t.hidden=false;
+  clearTimeout(toast._t);toast._t=setTimeout(function(){t.hidden=true},2000);
+}
+function copyText(txt){
+  function fb(){
+    var ta=document.getElementById("sum");
+    try{ta.focus();ta.select();var ok=document.execCommand("copy");toast(ok?"복사했어요":"글상자를 길게 눌러 복사해 주세요")}catch(e){toast("글상자를 길게 눌러 복사해 주세요")}
+  }
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){toast("복사했어요")},fb)}else fb();
+  }catch(e){fb()}
+}
+
+function act(a,t){
+  var id=t.getAttribute("data-id");
+  switch(a){
+    case "persona":state.persona=id;state.picks={};state.reasons=[];state.tab="kor";state.step="build";state.rulesOpen=false;window.scrollTo(0,0);break;
+    case "home":state.step="intro";state.picks={};state.reasons=[];window.scrollTo(0,0);break;
+    case "tab":state.tab=t.getAttribute("data-g");window.scrollTo(0,0);break;
+    case "rules":state.rulesOpen=!state.rulesOpen;break;
+    case "toggle":
+      if(state.picks[id]){delete state.picks[id]}
+      else if(BY[id].locked){sheetFor=id}
+      else{state.picks[id]={credit:BY[id].base,route:null}}
+      break;
+    case "inc":if(state.picks[id]&&state.picks[id].credit<BY[id].max)state.picks[id].credit++;break;
+    case "dec":if(state.picks[id]&&state.picks[id].credit>BY[id].min)state.picks[id].credit--;break;
+    case "route":
+      if(sheetFor){state.picks[sheetFor]={credit:BY[sheetFor].base,route:t.getAttribute("data-route")};sheetFor=null}
+      break;
+    case "closesheet":sheetFor=null;break;
+    case "report":state.step="report";window.scrollTo(0,0);break;
+    case "back":state.step="build";window.scrollTo(0,0);break;
+    case "reason":
+      var rr=t.getAttribute("data-r"),ix=state.reasons.indexOf(rr);
+      if(ix>-1)state.reasons.splice(ix,1);else state.reasons.push(rr);
+      break;
+    case "copy":copyText(document.getElementById("sum").value);return;
+  }
+  var y=window.pageYOffset;
+  render();
+  if(a==="toggle"||a==="inc"||a==="dec"||a==="route"||a==="reason"||a==="rules")window.scrollTo(0,y);
+}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-act]");if(!t)return;
+  if(t.getAttribute("data-act")==="closesheet"||t.getAttribute("data-act")==="route"||e.target.closest("#sheet")||e.target.closest("#app")||e.target.closest(".fab")){act(t.getAttribute("data-act"),t)}
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&sheetFor){sheetFor=null;renderSheet();return}
+  if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("course")){e.preventDefault();act("toggle",e.target)}
+});
+document.getElementById("sheet").addEventListener("click",function(e){if(e.target.id==="sheet"){sheetFor=null;renderSheet()}});
+
+load();
+if(state.step==="build"&&!state.persona)state.step="intro";
+render();
+})();
+</script>
+</body>
+</html>
