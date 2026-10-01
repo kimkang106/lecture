@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2022 개정교육과정과 고교학점제 · 강의 덱</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  --bg:#EEF1F7; --paper:#FFFFFF; --ink:#16223B; --ink2:#55627E; --line:#D3DAE8; --grid:rgba(22,34,59,.055);
+  --hl:#FFE566; --hl-soft:#FFF4B8; --org:#F99B54; --pen:#D22B45; --navy:#1B2B4B; --navy2:#2D4373;
+  --ok:#1B8A57; --soft:#E6EBF5;
+  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+    --hl-soft:#3B3618; --navy:#2A3C66; --soft:#202B47; --pen:#FF6B81; --ok:#4CC58C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
+  --hl-soft:#3B3618; --navy:#2A3C66; --soft:#202B47; --pen:#FF6B81; --ok:#4CC58C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0;overflow:hidden;background:#0b1020;font-family:var(--font);color:var(--ink)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid #E2C200;outline-offset:2px}
+
+/* viewport & stage */
+#vp{position:fixed;inset:0;overflow:hidden;background:#0b1020}
+body.presenter #vp{inset:0 auto 0 0;width:62%}
+#stage{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;font-size:27px;line-height:1.5}
+.slide.on{display:block;animation:fade .18s ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+body.blank #stage>*{visibility:hidden}
+
+/* header-type slides */
+.hd{position:absolute;left:0;right:0;top:0;height:92px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:20px;padding:0 48px}
+.hd .sec{font-size:19px;font-weight:700;color:#FFE566;border:2px solid #FFE566;border-radius:99px;padding:1px 14px;white-space:nowrap}
+.hd h2{margin:0;font-family:var(--display);font-weight:400;font-size:40px;line-height:1.2;letter-spacing:-.01em}
+.bd{position:absolute;left:48px;right:48px;top:116px;bottom:36px}
+.num{position:absolute;right:20px;bottom:10px;font-size:15px;color:var(--ink2)}
+/* statement slides */
+.stmt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 80px;gap:18px}
+.stmt h1{font-family:var(--display);font-weight:400;font-size:74px;line-height:1.2;margin:0}
+.stmt h1.sm{font-size:58px}
+.stmt .hl,.hl{background:var(--org);color:#16223B;padding:0 .35em;border-radius:3px;display:inline-block;line-height:1.55}
+.stmt .hl{font-size:34px}
+.hly{background:#FFE566;color:#16223B;padding:0 .3em;border-radius:3px}
+.pill{display:inline-block;background:var(--navy);color:#fff;border-radius:99px;padding:8px 34px;font-size:28px;font-weight:700}
+.dim{color:var(--ink2)}
+.big{font-family:var(--display);font-size:46px;line-height:1.25}
+.mid{font-size:32px;font-weight:700}
+/* components */
+.cols{display:grid;gap:24px;height:100%}
+.c2{grid-template-columns:1fr 1fr}.c3{grid-template-columns:repeat(3,1fr)}.c4{grid-template-columns:repeat(4,1fr)}.c21{grid-template-columns:1.7fr 1fr}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:22px 26px;min-width:0}
+.card.ink{background:var(--navy);color:#fff;border-color:var(--navy)}
+.card.hlc{background:var(--hl-soft);border-color:#E2C200}
+.card.org{border-color:var(--org);border-width:4px}
+.card h3{margin:0 0 8px;font-size:30px;line-height:1.3}
+.card .lb{font-size:20px;font-weight:700;color:var(--ink2);margin-bottom:2px}
+.card.ink .lb{color:#C9D3EA}
+.card p{margin:6px 0 0}
+.card ul,.bd ul{margin:6px 0 0;padding-left:1.1em}
+.card li,.bd li{margin:6px 0}
+.small{font-size:22px}.xs{font-size:19px;color:var(--ink2)}
+.tbl{width:100%;border-collapse:collapse;font-size:22px;background:var(--paper)}
+.tbl th{background:var(--navy);color:#fff;padding:9px 12px;border:1px solid var(--line);font-weight:700}
+.tbl td{padding:9px 12px;border:1px solid var(--line);vertical-align:middle}
+.tbl td:first-child{background:var(--soft);font-weight:700}
+.tbl.sm{font-size:19px}.tbl.sm td,.tbl.sm th{padding:6px 10px}
+.tbl.tn{font-size:17px}.tbl.tn td,.tbl.tn th{padding:4px 8px}.tbl.tn td:nth-child(3),.tbl.tn td:nth-child(4){white-space:nowrap}
+.tbl .hot{background:var(--hl-soft)}
+.tbl .red{color:var(--pen);font-weight:700}
+.num-c{width:56px;height:56px;border-radius:50%;background:var(--navy);color:#fff;display:inline-grid;place-items:center;font-family:var(--display);font-size:28px;flex:none}
+.row{display:flex;align-items:center;gap:18px;margin:14px 0}
+.arrow{font-size:46px;font-weight:700;color:var(--navy2);align-self:center;text-align:center}
+.band{position:absolute;left:0;right:0;bottom:0;background:var(--navy);color:#fff;border-radius:16px;padding:16px 28px;text-align:center;font-size:30px;font-weight:700}
+.band a{color:#FFE566}
+.btnl{display:inline-block;text-decoration:none;background:var(--hl);color:#16223B;border:2px solid var(--ink);border-radius:12px;padding:8px 22px;font-size:24px;font-weight:700;box-shadow:4px 4px 0 var(--ink)}
+.tag{display:inline-block;font-size:19px;font-weight:700;border:2px dashed var(--line);border-radius:99px;padding:0 14px;color:var(--ink2)}
+.bar{display:flex;align-items:flex-end;gap:10px;height:230px}
+.bar i{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-style:normal;font-size:18px}
+.bar i b{display:block;width:100%;background:var(--navy2);border-radius:6px 6px 0 0;color:#fff;text-align:center;padding-top:4px;font-size:18px}
+.bar.new i b{background:var(--org);color:#16223B}
+.st{visibility:hidden}.st.show{visibility:visible}
+/* embed */
+.frame{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--paper)}
+.frame .fh{display:flex;align-items:center;gap:16px;background:var(--navy);color:#fff;padding:0 28px;height:70px}
+.frame .fh b{font-family:var(--display);font-weight:400;font-size:32px}
+.frame .fh span{opacity:.8;font-size:20px}
+.frame .fh a{margin-left:auto;color:#FFE566;font-weight:700;font-size:20px}
+.frame iframe{flex:1;border:0;width:100%;background:var(--bg)}
+/* UI chrome */
+#ui{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;background:rgba(16,24,44,.92);color:#fff;border-radius:99px;padding:6px 8px;z-index:30;transition:opacity .25s;box-shadow:0 6px 24px rgba(0,0,0,.35)}
+body.idle #ui{opacity:0;pointer-events:none}
+#ui button{border:0;background:transparent;color:#fff;border-radius:99px;padding:6px 14px;font-size:15px;font-weight:700}
+#ui button:hover{background:rgba(255,255,255,.16)}
+#ui .pg{min-width:76px;text-align:center;font-variant-numeric:tabular-nums;font-size:15px}
+body.presenter #ui{left:31%}
+#prog{position:fixed;left:0;top:0;height:4px;background:#FFE566;z-index:31;transition:width .2s}
+#ov{position:fixed;inset:0;background:rgba(10,16,30,.985);z-index:40;overflow:auto;padding:28px 32px 60px;color:#fff}
+#ov[hidden]{display:none}
+#ov h3{margin:26px 0 10px;font-family:var(--display);font-weight:400;font-size:26px;color:#FFE566}
+#ov .hdr{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#ov .hdr b{font-family:var(--display);font-weight:400;font-size:30px}
+#ov .hdr button{border:1.5px solid #fff;background:transparent;color:#fff;border-radius:99px;padding:5px 16px;font-weight:700}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.th{position:relative;border:2px solid rgba(255,255,255,.25);border-radius:8px;overflow:hidden;background:#000;cursor:pointer;aspect-ratio:16/9;padding:0}
+.th.cur{border-color:#FFE566;box-shadow:0 0 0 3px #FFE566}
+.th .mini{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;pointer-events:none;background-color:var(--bg)}
+.th .mini{font-size:27px;line-height:1.5;font-family:var(--font);color:var(--ink)}
+.th .mini .slide{display:block;animation:none}
+.th .mini .st{visibility:visible}
+.th .n{position:absolute;left:6px;bottom:4px;background:rgba(0,0,0,.7);color:#fff;font-size:13px;border-radius:4px;padding:0 6px;z-index:2}
+#help{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);width:max-content;max-width:92vw;text-align:center;background:rgba(16,24,44,.95);color:#fff;border-radius:12px;padding:10px 18px;font-size:15px;z-index:35;transition:opacity .5s}
+#help.gone{opacity:0;pointer-events:none}
+/* presenter pane */
+#pp{display:none}
+body.presenter #help{display:none}
+body.presenter #pp{display:flex;position:fixed;right:0;top:0;bottom:0;width:38%;background:#10182c;color:#fff;padding:16px 18px;flex-direction:column;gap:12px;z-index:20;overflow:auto}
+#pp .nx{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;border:2px solid #394a76}
+#pp .nx .mini{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;background-color:var(--bg)}
+#pp .nx .mini{font-size:27px;line-height:1.5;font-family:var(--font);color:var(--ink)}
+#pp .nx .mini .slide{display:block;animation:none}
+#pp .nx .mini .st{visibility:visible}
+#pp .lab{font-size:13px;color:#9db0da;font-weight:700}
+#pp .notes{white-space:pre-wrap;font-size:19px;line-height:1.7;background:#18223c;border-radius:10px;padding:12px 14px;flex:1;min-height:120px}
+#pp .tm{display:flex;gap:18px;font-variant-numeric:tabular-nums;font-size:26px;font-weight:700}
+#pp .tm small{display:block;font-size:12px;color:#9db0da}
+#pp button{border:1.5px solid #5b6fa3;background:transparent;color:#fff;border-radius:8px;padding:4px 12px;font-weight:700}
+
+@media print{
+  html,body{height:auto;overflow:visible;background:#fff}
+  #vp{position:static;overflow:visible;background:#fff}
+  #stage{position:static;transform:none!important;width:auto;height:auto;background:none;overflow:visible}
+  .slide{display:block!important;position:relative;width:1280px;height:720px;page-break-after:always;break-after:page;overflow:hidden;background-color:#fff;animation:none}
+  .st{visibility:visible!important}
+  .frame iframe{display:none}
+  #ui,#prog,#help,#ov,#pp{display:none!important}
+  @page{size:1280px 720px;margin:0}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="vp"><div id="stage"></div></div>
+<aside id="pp">
+  <div class="tm"><div><small>경과 시간</small><span id="pel">00:00</span></div><div><small>현재 시각</small><span id="pnow">--:--</span></div><button id="prst">경과 초기화</button></div>
+  <div><div class="lab">다음 슬라이드</div><div class="nx" id="pnx"></div></div>
+  <div class="lab">발표 노트</div>
+  <div class="notes" id="pnotes"></div>
+</aside>
+<div id="ui">
+  <button id="bPrev" aria-label="이전">◀ 이전</button>
+  <span class="pg" id="pg">1 / 1</span>
+  <button id="bNext" aria-label="다음">다음 ▶</button>
+  <button id="bOv">목차</button>
+  <button id="bPres">발표자 화면</button>
+  <button id="bFs">전체화면</button>
+</div>
+<div id="help">← → 이동 · O 목차 · P 발표자 화면 · F 전체화면 · B 화면 끄기 · 슬라이드 번호는 주소 뒤 #번호</div>
+<div id="ov" hidden></div>
+
+<script>
+(function(){
+"use strict";
+/* ============ 설정: 강의마다 여기만 고치세요 ============ */
+var CONFIG={
+  kicker:"충남교육전문가특강",
+  course:"미래사회에서의 교육과 수업의 혁신",
+  lecture:"2022 개정교육과정과 고교학점제",
+  instructor:"충남교육청 중등교육과 장학사 김시형",
+  // 일시·장소는 주소 뒤에 ?d=2026.10.1.(목) 15:00~17:50&p=장소 로 바꿔 넣을 수도 있어요
+  date:"",
+  place:"",
+  survey:"https://tally.so/r/pb84D8",
+  feedback:"https://tally.so/r/7R64ZP",
+  apps:{quiz:"quiz.html",sim:"simulator.html",roles:"roles.html"}
+};
+var QS=new URLSearchParams(location.search);
+if(QS.get("d"))CONFIG.date=QS.get("d");
+if(QS.get("p"))CONFIG.place=QS.get("p");
+
+var SECS={1:"왜 학생 주도성인가",2:"교육과정이란",3:"2022 개정 교육과정",4:"고등학교 교육과정, 무엇이 달라졌나",5:"고교학점제",6:"현장의 목소리와 비판",7:"2028 대입과 과목 선택",8:"함께 해 보기",9:"마무리"};
+
+/* ============ 슬라이드 ============ */
+var T=function(head,rows,cls){return '<table class="tbl '+(cls||"")+'"><thead><tr>'+head.map(function(h){return '<th>'+h+'</th>'}).join("")+'</tr></thead><tbody>'+rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join("")+'</tr>'}).join("")+'</tbody></table>'};
+var S=[];
+function add(o){S.push(o)}
+
+/* 표지 */
+add({sec:0,t:"표지",cls:"stmt",html:function(){
+  return '<div class="stmt"><div class="mid dim" style="font-size:26px">'+CONFIG.kicker+' · '+CONFIG.course+'</div><h1>'+CONFIG.lecture+'</h1>'+
+   '<div class="pill">'+CONFIG.instructor+'</div>'+((CONFIG.date||CONFIG.place)?'<div class="dim" style="font-size:26px">'+[CONFIG.date,CONFIG.place].filter(Boolean).join(" · ")+'</div>':'')+'</div>';},
+  notes:"인사와 자기소개. 오늘은 듣는 시간보다 해 보는 시간이 많다는 점, 스마트폰을 꺼내 두라는 점을 안내합니다."});
+add({sec:0,t:"오늘의 구성",html:function(){
+  var items=Object.keys(SECS).map(function(k){return '<a href="#" data-sec="'+k+'" class="card" style="text-decoration:none;display:flex;gap:16px;align-items:center;padding:12px 20px"><span class="num-c" style="width:46px;height:46px;font-size:23px">'+k+'</span><span style="font-size:27px;font-weight:700">'+SECS[k]+'</span></a>'}).join("");
+  return '<header class="hd"><h2>오늘의 구성</h2></header><div class="bd"><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+items+'</div><p class="xs" style="margin-top:14px">카드를 누르면 그 부분으로 바로 이동해요. 언제든 O 키로 목차를 열 수 있어요.</p></div>';},
+  notes:"전체 구성을 소개합니다. 이 덱은 순서대로 가도 되고, 청중의 질문에 맞춰 목차(O 키)에서 바로 이동해도 됩니다."});
+
+/* 1. 학생 주도성 */
+add({sec:1,t:"AI가 답을 아는 시대",cls:"stmt",html:'<div class="stmt"><h1>AI가 답을 아는 시대,<br>학교에서 무엇을 배울까?</h1><div style="display:flex;flex-direction:column;gap:10px;align-items:center;margin-top:6px"><span class="hl">정답이 있는 질문은 몇 초면 답이 나온다</span><span class="hl">정답이 없는 문제를 붙잡고 방향을 정하는 힘</span><span class="hl">무엇을 아는가에서 무엇을, 왜 배울지 스스로 정하는가로</span></div><div class="pill" style="margin-top:14px">옆 사람과 1분 이야기해 보세요</div></div>',
+  notes:"[약 2분] 학생들은 스마트폰에 물어보면 몇 초 만에 답이 나오는 세상에서 자랍니다. AI가 웬만한 질문에 답하는 시대에 학교는 무엇을 가르쳐야 할까요? 옆 사람과 1분 이야기해 보게 하고, 2~3팀 발표를 듣습니다.\n\n정리: '스스로 질문을 만들고, 무엇을 배울지 정하고, 끝까지 해 보는 힘'. 교육에서는 이것을 주도성이라고 부릅니다."});
+add({sec:1,t:"학생 주도성이란?",html:'<header class="hd"><span class="sec">1</span><h2>학생 주도성이란?</h2></header><div class="bd"><div class="cols c21"><div class="card"><div class="lb" style="color:#7030A0">OECD 학습나침반 2030</div><h3 style="font-size:38px">학생 주도성 (student agency)</h3><div class="row"><span class="num-c">1</span><span class="mid" style="font-weight:500">목표를 세우고</span></div><div class="row"><span class="num-c">2</span><span class="mid" style="font-weight:500">스스로 돌아보고</span></div><div class="row"><span class="num-c">3</span><span class="mid" style="font-weight:500">책임 있게 행동해 변화를 만든다</span></div><div class="card hlc" style="padding:14px 20px;margin-top:6px"><b>함께 만드는 주도성 (co-agency)</b><br>교사·친구·가족의 지지 속에서 자란다</div></div><div class="card ink"><div class="lb">2022 개정 교육과정</div><div class="lb" style="margin-top:14px">인간상</div><div class="big" style="color:#F99B54;font-size:40px">자기주도적인 사람</div><p class="small">전인적 성장을 바탕으로 자아정체성을 확립하고 자신의 진로와 삶을 스스로 개척하는</p><div class="lb" style="margin-top:20px">교육과정 구성 중점</div><div class="big" style="color:#F99B54;font-size:36px">미래 대응 능력과 주도성</div></div></div></div>',
+  notes:"[약 3분] 주도성은 영어로 에이전시(agency). OECD는 2030 학습나침반에서 학생 주도성을 핵심 개념으로 제시했습니다. 목표를 세우고, 스스로 돌아보고, 책임 있게 행동해 변화를 만드는 힘입니다.\n\n'함께 만드는 주도성'은 혼자 알아서 하라는 뜻이 아니라 교사·친구·가족이 받쳐 줄 때 자란다는 뜻입니다. 뒤에서 다시 나옵니다.\n\n2022 개정도 같은 방향: 인간상 첫 줄이 자기주도적인 사람, 구성 중점에 미래 대응 능력과 주도성.\n\n※ OECD 학습나침반과 co-agency 표현은 인용 전 원문 확인."});
+add({sec:1,t:"주도성은 어디서 길러질까?",html:function(){return '<header class="hd"><span class="sec">1</span><h2>주도성은 어디서 길러질까?</h2></header><div class="bd"><div style="text-align:center"><div class="big" style="font-size:46px">주도성은 강의로 전달되지 않는다</div><div class="mid" style="margin-top:8px"><span class="hl">선택하고, 그 결과를 책임져 보는 경험이 쌓일 때 자란다</span></div></div><div class="cols c2" style="height:230px;margin-top:26px;grid-template-columns:1fr 70px 1fr"><div class="card" style="color:var(--ink2)"><h3>정해진 시간표를 따라가는 3년</h3><ul><li>학교가 짜 준 과목과 시간표</li><li>내가 뭘 원하는지 고민할 기회가 적다</li></ul></div><div class="arrow">→</div><div class="card org"><h3><span class="hly">내가 고르고 책임지는 3년</span></h3><ul><li>내 목표에서 출발해 과목을 고른다</li><li>선택의 결과를 겪고 다시 조정한다</li></ul></div></div><div class="band" style="font-size:28px">내가 고등학생 때 과목을 고른 기준은?'+(CONFIG.survey?' <a href="'+CONFIG.survey+'" target="_blank" rel="noopener">경험 설문 열기</a>':'')+'</div></div>';},
+  notes:"[약 3분] 주도성은 '주도적이어야 한다'고 가르친다고 생기지 않습니다. 선택해 보고 그 결과를 스스로 겪어 볼 때 자랍니다.\n\n(도입 설문 결과를 읽어 줍니다) 진로·흥미로 골랐다는 사람과 내신·입시 유불리로 골랐다는 사람의 비율. 선택할 기회가 있어도 그 선택이 진짜 내 목표에서 나온 것인지는 별개의 문제입니다. 이 질문이 오늘 계속 따라옵니다."});
+add({sec:1,t:"그 경험을 제도로 만든 것이 고교학점제",html:'<header class="hd"><span class="sec">1</span><h2>그 경험을 제도로 만든 것이 고교학점제</h2></header><div class="bd">'+T(["주도성의 요소","고교학점제의 장치","함께 받쳐 주는 장치"],[["목표를 세우고 선택","진로·적성에 따른 과목 선택<br>(일반·진로·융합선택 138개 과목)","학교에 없는 과목은 공동교육과정, 온라인학교, 학교 밖 교육으로"],["책임지는 행동","이수 기준(출석률 2/3, 학업성취율 40%)<br>192학점을 쌓아 졸업","최소 성취수준 보장지도<br>예방지도 · 보충지도 · 추가학습"],["성찰과 조정","공통과목으로 기본을 다진 뒤<br>2~3학년에 선택을 조정","교사의 진로·학업 설계 상담"]])+'<div style="text-align:center;margin-top:30px;font-size:34px;font-weight:700"><span class="hl">제도가 있다는 것과 주도성이 실제로 자란다는 것은 다른 문제</span></div></div>',
+  notes:"[약 4분] 고교학점제는 공통과목으로 기본을 다지고, 내 꿈에 맞는 과목을 직접 고르고, 일정 수준 이상 해냈다는 것을 증명하면 학점을 받는 제도입니다.\n\n표를 주도성의 요소에 맞춰 읽습니다: 선택은 138개 선택과목, 책임은 이수 기준, 함께하는 주도성은 오른쪽 칸(보장지도, 공동교육과정 등).\n\n그러나 제도가 있다는 것과 주도성이 실제로 자란다는 것은 다른 문제입니다. 뒤에서 현장의 어려움을 살펴봅니다.\n\n※ 오른쪽 열과 '함께 만드는 주도성'의 연결은 강의용 해석입니다. '이렇게 읽어 볼 수 있다'로 말하세요."});
+
+/* 2. 교육과정이란 */
+add({sec:2,t:"교육과정이란",cls:"stmt",html:'<div class="stmt"><h1>교육과정</h1><div style="display:flex;flex-direction:column;gap:12px;align-items:center"><span class="hl">사회적 합의에 기반해서</span><span class="hl">교육의 형평성과 질을 보장하기 위한 기본 틀로</span><span class="hl">교육부에서 고시</span></div></div>',
+  notes:"교육과정은 교육의 목표, 내용, 방법, 평가 등에 관한 국가 수준의 공통적이고 일반적인 기준과 내용입니다. 고시 주체는 교육부이고, 최근 일부 개정(2024, 2026)은 국가교육위원회가 고시했습니다."});
+add({sec:2,t:"오늘 풀 질문 4가지",cls:"stmt",html:'<div class="stmt"><div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start;font-size:50px;font-weight:700;line-height:1.3"><div><span class="hl" style="font-size:50px">교육과정</span>이란 무엇인지?</div><div><span class="hl" style="font-size:50px">2022 개정</span>이 무엇인지?</div><div><span class="hl" style="font-size:50px">언제부터</span> 적용되는지?</div><div><span class="hl" style="font-size:50px">어떻게</span> 적용되는지?</div></div></div>',
+  notes:"이 질문 네 가지를 따라 진행합니다."});
+add({sec:2,t:"N차 교육과정과 연도+개정",html:'<header class="hd"><span class="sec">2</span><h2>부모님 세대와 지금 세대</h2></header><div class="bd"><div class="cols c2"><div class="card" style="text-align:center"><div class="lb"><span class="hly">부모님 세대</span></div><h3 style="font-size:40px;margin-top:20px">5, 6, 7차 교육과정</h3><div class="big" style="color:#7030A0;margin-top:14px">N차 교육과정</div><div class="mid" style="margin-top:20px">전면 개정 체제</div><p class="small dim">한 차수가 넘어갈 때마다 모든 내용을 총체적으로 바꿈</p></div><div class="card org" style="text-align:center"><div class="lb"><span class="hl" style="background:var(--navy);color:#fff">지금 세대</span></div><h3 style="font-size:40px;margin-top:20px">연도+개정 교육과정</h3><div class="big" style="color:#7030A0;margin-top:14px">0000 개정 교육과정</div><div class="mid" style="margin-top:20px">수시 개정 체제</div><p class="small dim">필요한 부분을 때에 맞게 고침</p></div></div></div>',
+  notes:"부모님 세대는 5·6·7차처럼 차수로 불렀고 한 번에 모든 내용을 바꾸는 전면 개정 체제였습니다. 지금은 연도를 붙이고 필요한 부분을 고치는 수시 개정 체제입니다."});
+add({sec:2,t:"전면 개정 체제의 문제점",html:'<header class="hd"><span class="sec">2</span><h2>전면 개정 체제의 문제점</h2></header><div class="bd"><div class="card" style="margin-bottom:22px"><div class="row" style="margin:0"><span class="num-c">1</span><h3 style="margin:0;font-size:36px">사회의 <span class="hly">급속한</span> 변화</h3></div><p>기술과 사회가 급격하게 발전하며 교육과정을 신속하고 즉각적으로 수정해야 하는 경우가 발생함</p></div><div class="card"><div class="row" style="margin:0"><span class="num-c">2</span><h3 style="margin:0;font-size:36px">교육 단위의 <span class="hly">세분화</span></h3></div><ul><li>정부 단위 → 지역 → 학교 → 교실 단위</li><li>지역·학생 특징 존중, 교사의 자율성 확대, 학생 개개인의 특성과 진로에 맞는 맞춤형 교육 필요</li><li>교사의 목소리가 교육과정에 반영이 잘 안 된다는 비판 심화</li></ul></div></div>',
+  notes:"전면 개정 체제의 한계 두 가지: 사회 변화 속도와 교육 단위의 세분화."});
+add({sec:2,t:"7차와 2007 개정 비교",html:'<header class="hd"><span class="sec">2</span><h2>전면 개정에서 수시 개정으로</h2></header><div class="bd">'+T(["","7차 교육과정","2007 개정 교육과정"],[["고시번호","제1997-15호 외","제2007-79호 외"],["적용 연도","2000. 3. 1. 초1·2 → 2004년 전 학년","2009. 3. 1. 초1·2 → 2013년 전 학년"],["재량활동","한문, 컴퓨터, 환경, 생활외국어 등","한문, <b>정보</b>, 환경, 생활외국어, <b>보건</b> 등"],["고교 보통교과","교련 포함, 선택(일반/심화)","<b>교련 삭제</b>, 교양에 보건 추가, 선택은 보통교과로 변경"]])+'<div style="display:flex;gap:30px;justify-content:center;margin-top:24px"><span class="pill" style="background:#7030A0">전면 개정 체제</span><span class="pill" style="background:var(--pen)">수시 일부 개정</span></div></div>',
+  notes:"7차는 한 번에 크게 바꾸었고, 2007 개정은 일부 내용(정보, 보건 추가, 교련 삭제 등)을 고쳤습니다. 표는 읽지 말고 변화의 성격만 짚습니다."});
+add({sec:2,t:"수시 개정 이력",html:'<header class="hd"><span class="sec">2</span><h2>수시 개정은 이렇게 이어졌다</h2></header><div class="bd"><div class="cols c3" style="height:280px"><div class="card"><div class="lb">2007, 2009</div><h3 style="font-size:40px">총론 개정</h3></div><div class="card"><div class="lb">2011</div><h3 style="font-size:40px">교과교육과정 개정</h3></div><div class="card"><div class="lb">2012, 2013</div><h3 style="font-size:40px">총론 부분 개정</h3></div></div><p class="mid" style="margin-top:28px">같은 시기 고등학교 학년마다 서로 다른 교육과정이 적용되는 일이 생겼다 (예: 2011년 고1 2009 개정 / 고2·3 7차)</p></div>',
+  notes:"2007·2009 총론 개정, 2011 교과교육과정 개정, 2012·2013 총론 부분 개정. 개정이 잦아 학년별로 서로 다른 교육과정이 적용되기도 했습니다."});
+add({sec:2,t:"잦은 개정에서 약 5년에 한 번으로",cls:"stmt",html:'<div class="stmt"><div class="dim" style="font-size:30px">‘잦은 교육과정 개편’에 대한 우려가 컸던 2014년</div><h1 class="sm"><span class="hl" style="font-size:inherit;background:#FFE566">약 5년 정도에<br>한 번 대규모로 진행 추세</span></h1></div>',
+  notes:"잦은 개정에 대한 비판이 컸고, 지금은 약 5년에 한 번 대규모로 개정하고 그 사이 수시로 보완하는 추세입니다."});
+add({sec:2,t:"2015 개정 교육과정 편제",html:'<header class="hd"><span class="sec">2</span><h2>2015 개정 교육과정 고등학교 편제</h2></header><div class="bd">'+T(["구분","교과","내용"],[["보통교과","공통 과목","기초 소양 함양과 기본 학력을 갖추기 위한 과목"],["","선택 과목: 일반 선택","교과별 학문의 기본적 이해를 위한 과목"],["","선택 과목: 진로 선택","교과 융합학습, 진로 안내학습, 교과별 심화학습, 실생활 체험학습 등을 위한 과목"],["전문교과","전문교과 Ⅰ","특수 목적 고등학교(산업수요 맞춤형 고등학교 제외) 대상 교과"],["","전문교과 Ⅱ","특성화 고등학교와 산업수요 맞춤형 고등학교 대상 교과"],["","대학 선이수 과목",""]],"sm")+'</div>',
+  notes:"2015 개정의 고등학교 편제를 기억하게 하고, 2022 개정과 비교하는 기준점으로 씁니다."});
+
+/* 3. 2022 개정 */
+add({sec:3,t:"추진 계획",html:'<header class="hd"><span class="sec">3</span><h2>2022 개정 교육과정 추진 계획</h2></header><div class="bd">'+T(["","2021년","2022년","2023년","2024년","2025년"],[["교육과정","총론 주요사항 발표","개정 교육과정 고시 (’22 하)","후속 지원 (해설서, 평가 기준 등)","초등학교 적용 시작","중·고등학교 적용 시작"],["고교학점제","마이스터고 적용 (’20~)","특성화고 도입, 일반고 일부 도입","","","전체 고교 본격 시행"],["교과서","기초연구, 국정·검정 체제","교과용 도서 구분 고시","교과용 도서 개발","초등 보급 시작","중·고 보급 시작"],["대입 체제","대입 제도 개편 방안 검토","","","2028학년도 대입 방안 발표 (’24 상)",""]],"sm")+'</div>',
+  notes:"교육과정 개정, 고교학점제, 교과서, 대입 체제가 같은 일정 위에서 움직였다는 점을 보여 줍니다. 특히 2025년에 고교학점제가 전체 고교에 본격 시행됩니다."});
+add({sec:3,t:"연차별 적용 시기",html:'<header class="hd"><span class="sec">3</span><h2>2022 개정 교육과정 적용 시기</h2></header><div class="bd">'+T(["2022","2024","2025","2026","2027"],[["고시","초 1~2","초 3~4","초 5~6",""],["","","중1","중2","중3"],["","","<b>고1</b>","<b>고2</b>","<b>고3</b><br><span class=\"red\">(2028 수능)</span>"]])+'<p class="mid" style="margin-top:26px">연차별 적용: 한 해에 모든 학년이 아니라 해마다 학년을 넓혀 간다</p></div>',
+  notes:"2024 초1~2, 2025 초3~4·중1·고1, 2026 초5~6·중2·고2, 2027 중3·고3. 2027년 고3이 2028학년도 수능을 치릅니다."});
+add({sec:3,t:"왜 연차별로 적용할까",html:'<header class="hd"><span class="sec">3</span><h2>연차별 적용, 왜?</h2></header><div class="bd"><div class="cols c2" style="height:220px"><div class="card"><div class="row" style="margin:0"><span class="num-c">1</span><h3 style="margin:0">학교도 교육과정을 습득하고 연구할 <span class="hly">시간</span>이 필요</h3></div></div><div class="card"><div class="row" style="margin:0"><span class="num-c">2</span><h3 style="margin:0">한 학생이 입학해서 졸업할 때까지 <span class="hly">하나의 교육과정</span>으로 적용</h3></div></div></div><div class="cols c2" style="margin-top:26px;height:210px"><div class="card ink" style="text-align:center"><div class="lb">3학년 (현재)</div><div class="big">2015 개정</div></div><div class="card org" style="text-align:center"><div class="lb">1·2학년 (현재)</div><div class="big">2022 개정</div></div></div><p class="small" style="margin-top:14px;text-align:center">학년에 따라 <b>생활기록부 양식</b>과 <b>평가 방식</b>이 다르다 &nbsp;·&nbsp; 2027 고3 = 2028 대입</p></div>',
+  notes:"연차별 적용의 이유 두 가지. 이 때문에 같은 학교 안에서도 학년별로 교육과정, 생활기록부 양식, 평가 방식이 다릅니다. '현재'는 2026학년도 기준이므로 강의 시점에 맞게 확인하세요."});
+add({sec:3,t:"2022 개정 교육과정이란",html:'<header class="hd"><span class="sec">3</span><h2>2022 개정 교육과정</h2></header><div class="bd"><div class="card" style="margin-bottom:20px"><div class="lb">교육부가 2022년 12월 22일에 고시</div><p class="mid" style="margin:4px 0 0">대한민국의 <span class="hly">11번째</span> 교육과정이자 7차 교육과정 이래 <span class="hly">4번째 수시 개정</span></p></div><div class="cols c2" style="height:250px"><div class="card"><div class="lb">국가교육위원회 · 2024년 8월 16일</div><h3>일부 개정 고시</h3><p class="small">자사고·외고 존치로 인해 관련 내용 추가</p></div><div class="card hlc"><div class="lb">국가교육위원회 · 2026년 1월 21일</div><h3>일부 개정 고시</h3><p class="small">학점 이수 기준 완화 (출석률, 학업성취율 중 하나 이상은 반영)</p></div></div></div>',
+  notes:"2022 개정의 고시와 이후 두 차례 일부 개정. 2026년 1월 개정의 학점 이수 기준 완화는 최신 지침으로 세부 내용을 확인하고 말하세요."});
+add({sec:3,t:"교육과정 비전과 인간상",html:'<header class="hd"><span class="sec">3</span><h2>교육과정 비전: 포용성과 창의성을 갖춘 주도적인 사람</h2></header><div class="bd"><div class="cols c2" style="grid-template-columns:1fr 1.5fr"><div class="card"><h3 style="font-size:26px">교육과정 구성 중점</h3><ul class="small" style="font-size:20px;line-height:1.35" style="font-size:22px"><li><b>미래 대응 능력과 주도성</b></li><li>개개인의 인격적 성장과 공동체 의식</li><li>언어, 수리, 디지털 기초소양 함양</li><li>학습자 맞춤형 교육과정</li><li>깊이 있는 학습</li><li>능동적 참여와 학습의 질 개선</li><li>자율화, 분권화에 기초한 협력체제 구축</li></ul></div><div style="display:grid;gap:8px"><div class="card hlc" style="padding:8px 18px"><b><span class="hly">자기주도적인 사람</span></b><div class="small" style="font-size:20px;line-height:1.35">전인적 성장을 바탕으로 자아정체성을 확립하고 자신의 진로와 삶을 스스로 개척</div></div><div class="card" style="padding:8px 18px"><b><span class="hly">창의적인 사람</span></b><div class="small" style="font-size:20px;line-height:1.35">폭넓은 기초 능력을 바탕으로 진취적 발상과 도전을 통해 새로운 가치를 창출</div></div><div class="card" style="padding:8px 18px"><b><span class="hly">교양 있는 사람</span></b><div class="small" style="font-size:20px;line-height:1.35">문화적 소양과 다원적 가치에 대한 이해를 바탕으로 인류 문화를 향유하고 발전</div></div><div class="card" style="padding:8px 18px"><b><span class="hly">더불어 사는 사람</span></b><div class="small" style="font-size:20px;line-height:1.35">공동체 의식을 바탕으로 다양성을 이해하고 서로 존중하는 민주시민으로서 배려와 나눔, 협력을 실천</div></div></div></div></div>',
+  notes:"구성 중점 7가지와 인간상 4가지. 첫 줄 '자기주도적인 사람'이 오늘 주제와 맞닿아 있음을 다시 짚습니다."});
+add({sec:3,t:"핵심역량과 교육목표",html:'<header class="hd"><span class="sec">3</span><h2>인간상, 핵심역량, 학교급별 교육목표</h2></header><div class="bd">'+T(["추구하는 인간상","핵심역량","교육 목표"],[["자기주도적인 사람","자기 관리 역량","성숙한 자아의식과 인간의 존엄성에 대한 존중을 바탕으로 일의 가치를 이해하고, 자신의 진로에 맞는 지식과 기능을 익히며 평생 학습의 기본 능력을 기른다."],["창의적인 사람","지식정보처리 역량<br>창의적 사고 역량","다양한 분야의 지식과 경험을 융합하여 창의적으로 문제를 해결하고, 새로운 상황에 능동적으로 대처하는 능력을 기른다."],["교양 있는 사람","심미적 감성 역량","인문·사회·과학 기술 소양과 다양한 문화에 대한 이해를 바탕으로 새로운 문화 창출에 기여할 수 있는 자질과 태도를 기른다."],["더불어 사는 사람","협력적 소통 역량<br>공동체 역량","국가 공동체에 대한 책임감을 바탕으로 배려와 나눔을 실천하며 세계와 소통하는 민주시민으로서의 자질과 태도를 기른다."]],"sm")+'</div>',
+  notes:"인간상, 핵심역량 6가지, 고등학교 교육목표의 대응 관계. 표는 읽지 않고 구조만 보여 줍니다."});
+
+/* 4. 고등학교 */
+add({sec:4,t:"고등학교 교육과정 주요 개정 내용",html:'<header class="hd"><span class="sec">4</span><h2>고등학교 교육과정 주요 개정 내용</h2></header><div class="bd"><div class="cols c2" style="grid-template-rows:1fr 1fr"><div class="card"><div class="num-c">1</div><h3 style="margin-top:10px">학기제 과목 운영</h3></div><div class="card"><div class="num-c">2</div><h3 style="margin-top:10px">학점 인정을 위한 이수 기준 도입</h3></div><div class="card"><div class="num-c">3</div><h3 style="margin-top:10px">필수 이수 학점 축소</h3></div><div class="card"><div class="num-c">4</div><h3 style="margin-top:10px">선택 과목 체계 변화</h3></div></div></div>',
+  notes:"총론 차원의 고등학교 변화 네 가지. 이후 슬라이드에서 하나씩 숫자로 확인합니다."});
+add({sec:4,t:"수업 횟수 변화",html:'<header class="hd"><span class="sec">4</span><h2>수업 횟수 변화: 수업량 적정화</h2></header><div class="bd"><div class="cols c2" style="grid-template-columns:1.5fr 1fr;height:300px"><div class="card"><h3>2015 개정 교육과정</h3>'+T(["2019년 이전","2020~2022년","2023~2025년"],[["1단위: 17회","1단위: 17회 (16+1회)","1학점: 17회 (16+1)"]])+'</div><div class="card org" style="text-align:center"><div class="lb">2022 개정 · 2025년~</div><div class="big" style="color:var(--pen);font-size:64px">1학점: 16회</div></div></div><p class="mid" style="margin-top:24px">1학점은 50분을 기준으로 <span class="red">16회</span>를 이수하는 수업량</p><p class="small dim">일반고 기준: 1·2학년 16회 / 3학년 17회 (1주의 수업량 차이 발생)</p></div>',
+  notes:"1학점 = 50분 × 16회. 2015 개정은 17회(16+1)였습니다. 현재 고3은 2015 개정이라 17회를 적용받아 학년 간 1주의 수업량 차이가 납니다."});
+add({sec:4,t:"고등학교 편제",html:'<header class="hd"><span class="sec">4</span><h2>2022 개정 교육과정 고등학교 편제 (體制)</h2></header><div class="bd"><div style="display:grid;grid-template-columns:200px 60px 200px 60px 1fr;align-items:center;gap:0;row-gap:12px;font-size:23px"><div class="card ink" style="grid-row:1 / 8;text-align:center;font-weight:700">고등학교<br>교육과정</div><div style="grid-row:1 / 8;text-align:center" class="dim">▶</div><div class="card" style="grid-row:1 / 6;text-align:center;font-weight:700;align-self:stretch;display:flex;align-items:center;justify-content:center">교과(군)</div><div style="grid-row:1 / 6;text-align:center" class="dim">▶</div><div style="display:grid;gap:10px"><div class="card" style="padding:10px 20px"><b>보통교과</b> : 공통 과목 / 선택 과목 (일반선택 · 진로선택 · 융합선택)</div><div class="card" style="padding:10px 20px"><b>전문교과</b> : 전문 공통 / 전공 일반 / 전공 실무</div></div><div class="card" style="grid-column:3;grid-row:6 / 8;text-align:center;font-weight:700;display:flex;align-items:center;justify-content:center">창의적 체험활동</div><div style="grid-column:4;grid-row:6 / 8;text-align:center" class="dim">▶</div><div class="card" style="grid-column:5;grid-row:6 / 8;padding:10px 20px;display:flex;align-items:center">자율·자치 활동 / 동아리 활동 / 진로 활동</div></div></div>',
+  notes:"교과(군)와 창의적 체험활동으로 이루어진 편제. 보통교과의 선택과목에 융합선택이 새로 생긴 것이 핵심입니다."});
+add({sec:4,t:"이수 학점 변화",html:'<header class="hd"><span class="sec">4</span><h2>이수 학점 변화: 필수 이수 조정, 자율 이수 확대</h2></header><div class="bd"><div class="cols c2" style="grid-template-columns:1fr 1.35fr"><div style="display:grid;gap:16px"><div class="card" style="text-align:center"><div class="lb">필수 이수 학점</div><div class="big">94 <span class="dim">→</span> <span style="color:var(--pen)">84</span></div></div><div class="card" style="text-align:center"><div class="lb">자율 선택 학점</div><div class="big">80 <span class="dim">→</span> <span style="color:var(--ok)">90</span></div></div><div class="card hlc small">다양한 선택과목 개설과 교육과정 편성의 <b>유연성 확보</b><br>한국사, 체육·예술·교양 영역 유지<br>사회·과학은 균형적인 학습 고려<br>국·영·수 총 이수 <b>81학점 초과 금지</b></div></div>'+T(["교과(군)","공통 과목","필수 이수"],[["국어","공통국어1, 2","8"],["수학","공통수학1, 2","8"],["영어","공통영어1, 2","8"],["사회","한국사1, 2 / 통합사회1, 2","6 / 8"],["과학","통합과학1, 2 / 과학탐구실험1, 2","10"],["체육 · 예술","","10 · 10"],["기술·가정/정보/제2외국어/한문/교양","","16"],["소계","<b>필수 84 + 자율 90</b>","<b>174</b>"],["창의적 체험활동","","18 (288시간)"],["총 이수 학점","","<b>192</b>"]],"sm")+'</div></div>',
+  notes:"2015 개정은 필수 94·자율 80, 2022 개정은 필수 84·자율 90. 총 192학점(교과 174 + 창의적 체험활동 18, 288시간). 국·영·수는 81학점을 넘을 수 없습니다."});
+add({sec:4,t:"기본 이수 학점과 증감 범위",html:'<header class="hd"><span class="sec">4</span><h2>기본 이수 학점 증감 범위 조정</h2></header><div class="bd">'+T(["구분","과목","기본","범위","비고"],[["공통","공통국어·수학·영어, 통합사회·통합과학 (각 1, 2)","4학점","3~4학점","1학점 내 감(−) 가능, 증(+) 불가"],["","한국사1, 2","3학점","3학점","감·증 모두 불가"],["","과학탐구실험1, 2","1학점","1학점","과학고·체육고·예술고·특성화고·산업수요 맞춤형고는 편성 제외 가능"],["선택","국어·수학·영어·사회·과학·기술가정·정보·제2외국어·한문","4학점","3~5학점","1학점 내 증감(±) 가능"],["","체육·예술·교양","3학점","2~4학점","1학점 내 증감(±) 가능"],["","스포츠 문화, 스포츠 과학, 생애 설계와 자립","2학점","1~2학점","1학점 내 감(−) 가능"]],"sm tn")+'<div class="cols c2" style="margin-top:12px;height:80px;grid-template-columns:1fr 1fr"><div class="card xs" style="padding:8px 18px;font-size:20px;color:var(--ink)">과목별 기본학점 <b>5 → 4</b> 축소, 증감 폭 5±2or3 → <b>4±1</b></div><div class="card xs" style="padding:8px 18px;font-size:20px;color:var(--ink)">특수목적고 선택과목 4±2 / 전문교과 2학점 이상 편성</div></div></div>',
+  notes:"공통과목 기본 4학점(3~4), 선택과목 기본 4학점(3~5)으로 증감 폭이 줄었습니다. 한국사는 3학점 고정."});
+add({sec:4,t:"과목의 구조",html:'<header class="hd"><span class="sec">4</span><h2>과목의 구조: 보통교과와 전문교과</h2></header><div class="bd"><h3 style="font-size:24px;margin:0 0 6px">보통교과</h3>'+T(["","공통 과목","일반 선택","진로 선택","융합 선택"],[["2015 개정","기초 소양 함양과 기본 학력","교과별 학문의 기본적 이해","교과 융합학습, 진로 안내, 심화학습, 실생활 체험학습","—"],["2022 개정","기초소양 및 기본학력 함양, 학문의 기본 이해 내용","교과별 학문 영역 내 주요 학습 내용 이해 및 탐구","교과별 심화 학습 및 진로 관련","교과 내·교과 간 주제 융합, 실생활 체험 및 응용"]],"sm")+'<h3 style="font-size:24px;margin:20px 0 6px">전문교과</h3>'+T(["","전문 공통","기초 / 전공 일반","실무 / 전공 실무"],[["2015 (전문교과Ⅱ)","직업세계에 필요한 기본소양","기초 과목: NCS 실무 과목의 선행 또는 분야 기초 역량","실무 과목: 인력양성 유형에 적합한 NCS 능력단위 재구성"],["2022","직업세계에 필요한 기본소양","교과(군)·기준학과별 기초역량 함양 또는 전공 실무의 선수과목","교과(군)·기준학과별 실무역량 함양"]],"sm")+'</div>',
+  notes:"보통교과는 선택과목 유형이 두 가지에서 세 가지로, 전문교과는 전문 공통·전공 일반·전공 실무로 정리되었습니다."});
+add({sec:4,t:"선택과목 수",cls:"stmt",html:'<div class="stmt"><div style="display:flex;gap:70px;align-items:center"><div class="card" style="text-align:left;padding:30px 44px"><div class="lb"><span class="hly">2015</span></div><div class="mid">일반 선택: 51개</div><div class="mid">진로 선택: 44개</div><div class="big" style="color:#7030A0;margin-top:10px;font-size:60px">95개</div></div><div class="arrow" style="font-size:80px">→</div><div class="card org" style="text-align:left;padding:30px 44px"><div class="lb"><span class="hl" style="background:var(--navy);color:#fff;font-size:20px">2022</span></div><div class="mid">일반선택: 36개</div><div class="mid">진로선택: 64개</div><div class="mid">융합선택: 38개</div><div class="big" style="color:#7030A0;margin-top:10px;font-size:60px">138개</div></div></div></div>',
+  notes:"선택과목은 95개에서 138개로 늘고, 융합선택이 새로 생겼습니다. 학생이 고를 수 있는 폭이 크게 넓어졌습니다."});
+add({sec:4,t:"과목 목록과 평가 방식",html:'<header class="hd"><span class="sec">4</span><h2>2022 개정 교육과정(현재 고1·고2): 86% 이내 등급 평가</h2></header><div class="bd" style="font-size:19px">'+T(["교과","공통과목","일반선택","진로선택","융합선택"],[["국어","공통국어1, 2","화법과 언어, 독서와 작문, 문학","주제 탐구 독서, 문학과 영상, 직무 의사소통","독서 토론과 글쓰기, 매체 의사소통, 언어생활 탐구"],["수학","공통수학1, 2","대수, 미적분Ⅰ, 확률과 통계","기하, 미적분Ⅱ, 경제 수학, 인공지능 수학, 직무 수학","수학과 문화, 실용 통계, 수학과제 탐구"],["영어","공통영어1, 2","영어Ⅰ, 영어Ⅱ, 영어 독해와 작문","영미 문학 읽기, 영어 발표와 토론, 심화 영어, 직무 영어 등","실생활 영어 회화, 미디어 영어, 세계 문화와 영어"],["사회","한국사1, 2 / 통합사회1, 2","세계시민과 지리, 세계사, 사회와 문화, 현대사회와 윤리","한국지리 탐구, 정치, 법과 사회, 경제, 윤리와 사상 등","<span class=\"hly\">여행지리, 사회문제 탐구, 금융과 경제생활, 기후변화와 지속가능한 세계 등</span>"],["과학","통합과학1, 2 / 과학탐구실험1, 2","물리학, 화학, 생명과학, 지구과학","역학과 에너지, 전자기와 양자, 화학 반응의 세계 등","<span class=\"hly\">과학의 역사와 문화, 기후변화와 환경생태, 융합과학 탐구</span>"]],"sm")+'<p class="small" style="margin-top:12px">5등급 상대평가가 기본이고, <span class="hly">사회·과학 융합선택과 과학탐구실험은 절대평가(5단계)</span></p></div>',
+  notes:"교과별 대표 과목과 평가 방식. 노란 표시한 사회·과학 융합선택은 절대평가라 선택이 쏠릴 수 있다는 점을 뒤의 대입 이야기와 연결합니다."});
+add({sec:4,t:"평가 결과 변화",html:'<header class="hd"><span class="sec">4</span><h2>평가 결과 변화: 등급별 비율</h2></header><div class="bd"><div class="cols c2" style="height:330px"><div class="card"><h3 style="text-align:center">현행 (9등급)</h3><div class="bar">'+[4,7,12,17,20,17,12,7,4].map(function(v,i){return '<i><b style="height:'+(v*8)+'px">'+v+'%</b>'+(i+1)+'등급</i>'}).join("")+'</div></div><div class="card org"><h3 style="text-align:center">변경 (5등급)</h3><div class="bar new">'+[10,24,32,24,10].map(function(v,i){return '<i><b style="height:'+(v*5)+'px">'+v+'%</b>'+(i+1)+'등급</i>'}).join("")+'</div></div></div><p class="small dim" style="margin-top:20px;text-align:center">성취평가제(A~E)와 상대평가(5등급제)를 병기한다</p></div>',
+  notes:"9등급 4·7·12·17·20·17·12·7·4%에서 5등급 10·24·32·24·10%로 바뀌었고, 성취도(A~E)와 석차등급을 함께 기재합니다."});
+add({sec:4,t:"대입전형 자료 변화",html:'<header class="hd"><span class="sec">4</span><h2>평가 결과 변화: 대입전형 자료</h2></header><div class="bd">'+T(["구분","원점수","성취도","석차등급","성취도별 분포·평균·수강자수"],[["보통교과","○","A·B·C·D·E","5등급","○"],["<span class=\"red\">사회·과학 융합선택</span>","○","A·B·C·D·E","—","○"],["체육·예술 / 과학탐구실험","—","A·B·C","—","—"],["교양","—","P","—","—"],["전문교과","○","A·B·C·D·E","5등급","○"]])+'<p class="small" style="margin-top:20px">과목별 평가 정보: 지필·수행평가 비중, 수행평가 영역명, 성취도별 분할 점수<br>교육과정 운영상 특이사항: 과목개설 유형(공동·온라인학교·학교 밖 교육 등), 과목이수 상황(추가학습 이수/미이수/대체이수 등), 학적변동으로 인한 이수과목 차이</p></div>',
+  notes:"대입전형 자료에 무엇이 나가는지. 과목 개설 유형과 이수 상황 같은 교육과정 운영 특이사항도 함께 제공됩니다."});
+add({sec:4,t:"창의적 체험활동",html:'<header class="hd"><span class="sec">4</span><h2>창의적 체험활동</h2></header><div class="bd"><div class="card hlc" style="margin-bottom:18px;padding:14px 24px"><b>교과와의 상호 보완적인 관계</b> 속에서 학생의 전인적 성장을 위하여 학교가 자율적으로 설계·운영할 수 있는 경험과 실천 중심의 교육과정 영역</div>'+T(["영역","활동","예시"],[["자율·자치 활동","자율활동 / 자치활동","주제 탐구, 적응 및 개척, 프로젝트형 봉사 / 기본생활습관, 관계 형성과 소통, 공동체 자치"],["동아리 활동","학술·문화 및 여가 활동 / 봉사활동","학술·예술·스포츠·놀이 동아리 / 교내·지역사회 봉사, 청소년 단체 활동"],["진로 활동","진로 탐색 활동 / 진로 설계 및 실천 활동","자아·진로·직업 이해, 정보 탐색 / 진로 준비·계획·체험"]],"sm")+'<p class="small" style="margin-top:14px">성취기준 없이 학교가 선택해 운영하는 영역 · 18학점(288시간)</p></div>',
+  notes:"창의적 체험활동의 세 영역. 이수 기준은 3개년 운영 횟수의 2/3 이상 출석입니다."});
+
+/* 5. 고교학점제 */
+add({sec:5,t:"고교학점제란",cls:"stmt",html:'<div class="stmt"><h1 class="sm" style="margin-bottom:10px">고교학점제</h1><div style="text-align:left;display:flex;flex-direction:column;gap:14px;font-size:38px;font-weight:700"><div>학생이 <span class="hl" style="font-size:38px">① 공통 과목으로 기본</span>을 다지고 <span class="dim" style="font-size:24px">(기초 소양, 최소한의 역량)</span></div><div><span class="hl" style="font-size:38px">② 내 꿈에 맞는 수업을 직접 골라</span> <span class="dim" style="font-size:24px">(학생 선택형 교육과정)</span></div><div><span class="hl" style="font-size:38px">③ 일정 수준 이상의 실력을 증명</span> <span class="dim" style="font-size:24px">(이수 기준)</span>한</div><div>과목에 대해 <span class="hly">학점을 취득·누적하여 졸업</span>하는 제도</div></div></div>',
+  notes:"고교학점제의 정의를 세 단계로 기억하게 합니다. 이후 세 슬라이드가 ①②③에 각각 대응합니다."});
+add({sec:5,t:"교육과정과 고교학점제",html:'<header class="hd"><span class="sec">5</span><h2>교육과정과 고교학점제</h2></header><div class="bd"><div class="cols c2" style="height:300px"><div class="card"><div class="lb">고교학점제</div><h3 style="font-size:34px">학생의 진로와 적성에 맞춰 과목을 선택·이수하여 누적 학점으로 졸업을 인정받는 <span class="hly">제도적 틀</span></h3></div><div class="card org"><div class="lb">2022 개정 교육과정</div><h3 style="font-size:34px">고교학점제의 핵심인 다양한 과목 선택권 보장, 수업량 적정화, 국가 수준 최소 학력 보장 등을 <span class="hly">위해 설계된 교육과정</span></h3></div></div><p class="mid" style="margin-top:26px;text-align:center">제도(틀)와 교육과정(내용)이 함께 움직인다</p></div>',
+  notes:"고교학점제는 제도적 틀이고, 2022 개정은 그 틀이 작동하도록 설계된 교육과정입니다."});
+add({sec:5,t:"① 기초 소양과 기본 학력",html:'<header class="hd"><span class="sec">5</span><h2>① 기초 소양과 기본 학력을 바탕으로</h2></header><div class="bd"><div class="card" style="margin-bottom:20px"><div class="lb">설명</div><p class="mid" style="margin:0;font-weight:500">국어, 수학, 영어와 같은 <b>공통 과목</b>을 통해 기본적인 문해력과 계산 능력 등을 갖추는 단계</p></div><div class="card" style="margin-bottom:20px"><div class="lb">예시</div><p class="mid" style="margin:0;font-weight:500">1학년 공통국어, 공통수학, 공통영어, 한국사, 통합사회, 통합과학, 과학탐구실험 등</p></div><div class="card"><div class="lb">근거</div><p class="mid" style="margin:0;font-weight:500">「초·중등교육법」 및 국가 교육과정(2022 개정 교육과정) 공통 과목은 필수 이수 단위(학점)로 지정</p></div></div>',
+  notes:"공통과목은 모든 학생이 함께 이수하는 기본 단계입니다. 선택의 출발점이기도 합니다."});
+add({sec:5,t:"② 내 꿈에 맞는 수업",html:'<header class="hd"><span class="sec">5</span><h2>② 내 꿈에 맞는 수업을 직접 골라 (학생 선택형 교육과정)</h2></header><div class="bd"><div class="card" style="margin-bottom:18px;padding:16px 24px"><div class="lb">설명</div>공통 과목을 이수한 후, 2~3학년 때는 자신의 전공 희망이나 관심사에 따라 <b>일반 / 진로 / 융합 선택</b> 과목 중 선택</div><div class="cols c2" style="height:290px"><div class="card"><div class="lb">예시</div><ul><li><b>공학 계열 희망자</b>: 미적분Ⅰ·Ⅱ, 기하, 역학과 에너지, 전자기와 양자 등</li><li><b>경상 계열 희망자</b>: 경제, 경제 수학, 사회문제 탐구 등</li><li><b>예체능 계열 희망자</b>: 음악 감상과 비평, 미술 창작 등</li></ul></div><div class="card org"><div class="lb">학교 밖 교육</div><p class="mid" style="font-weight:500;margin-top:4px">우리 학교에 원하는 과목이 없다면 <span class="hly">다른 학교와의 공동교육과정</span>이나 <span class="hly">지역 대학·기관과 연계한 수업</span>을 선택</p></div></div></div>',
+  notes:"선택은 학교 안에서만 이루어지지 않습니다. 학교에 없는 과목은 공동교육과정, 온라인학교, 학교 밖 교육으로 채웁니다. (원고의 '물리학Ⅱ'는 2015 개정 과목명이라 2022 개정 과목명으로 바꾸었습니다.)"});
+add({sec:5,t:"③ 이수 기준",html:'<header class="hd"><span class="sec">5</span><h2>③ 일정 수준 이상의 실력을 증명 (이수 기준)</h2></header><div class="bd"><div style="display:grid;grid-template-columns:150px 1fr 90px 1.1fr 60px 120px;gap:12px;align-items:center;font-size:22px"><div class="card ink" style="padding:14px;text-align:center;font-weight:700;grid-row:1">과목<br>이수 기준</div><div style="display:grid;gap:8px"><div class="card" style="padding:10px 14px">과목 출석률 <b>2/3 이상</b></div><div class="card" style="padding:10px 14px">학업 성취율 <b>40% 이상</b></div></div><div class="arrow" style="font-size:26px">기준<br>미도달</div><div class="card hlc" style="padding:12px 16px"><b>추가학습</b> (출석 미달)<br><b>최소 성취수준 보장지도</b> (성취율 미달)</div><div class="arrow">→</div><div class="card" style="text-align:center;padding:14px;font-weight:700">학점 취득</div></div><div style="display:grid;grid-template-columns:150px 1fr 90px 1.1fr 60px 120px;gap:12px;align-items:center;font-size:22px;margin-top:26px"><div class="card" style="padding:14px;text-align:center;font-weight:700;background:var(--navy2);color:#fff;border-color:var(--navy2)">창의적 체험활동<br>이수 기준</div><div class="card" style="padding:10px 14px">3개년 실제 운영 횟수의 <b>2/3 이상 출석</b></div><div class="arrow" style="font-size:26px">기준<br>미도달</div><div class="card hlc" style="padding:12px 16px"><b>별도 이수 기회</b> 제공<br>(방학 중, 학교 밖 교육 등)</div><div class="arrow">→</div><div class="card" style="text-align:center;padding:14px;font-weight:700">학점 취득</div></div><p class="small" style="margin-top:26px"><b>추가 학점 취득 기회 제공</b> · 2/3 이상 참여 시 취득 학점 누적</p></div>',
+  notes:"이수 기준은 출석률 2/3, 학업성취율 40%. 미달해도 최소 성취수준 보장지도와 추가학습으로 이수 기회를 줍니다. 창의적 체험활동은 3년간 운영 횟수의 2/3 출석입니다.\n\n※ 2026.1.21 개정(이수 기준 완화) 내용은 최신 지침으로 확인하세요."});
+add({sec:5,t:"최소성취수준보장지도",html:'<header class="hd"><span class="sec">5</span><h2>최소성취수준 보장지도 (추가학습)</h2></header><div class="bd"><div class="card" style="margin-bottom:14px;padding:14px 24px"><b>정의</b> 이수 기준 미도달(예상) 과목에 대한 보충(예방)학습을 제공하여, 학생이 선택한 모든 과목을 이수할 수 있도록 지원하는 책임교육</div><div class="cols c3" style="height:300px"><div class="card"><div class="lb">예방 지도</div><p class="small" style="margin:0"><b>학기 중</b>, 예상 학생 중 <b>희망자</b>를 대상으로 실시</p></div><div class="card"><div class="lb">보충 지도</div><ul class="small"><li><b>미이수 학생</b> (학업성취율 40% 미만, 과목 출석률과는 무관)</li><li>성적 산출 이후(또는 성적처리) 학기 내(방학 포함)</li></ul></div><div class="card"><div class="lb">추가 학습</div><ul class="small"><li>보충지도에 준하여 실시</li><li>미이수 학생 (학업성취율 40% 이상, <b>과목 출석률 2/3 미만</b>)</li><li>성적 산출 이후(또는 종업식) 학기 내(방학 포함)</li></ul></div></div></div>',
+  notes:"예방지도, 보충지도, 추가학습의 구분이 핵심입니다. 보충지도는 성취율 40% 미만(출석 무관), 추가학습은 성취율은 충족했지만 출석 2/3에 못 미치는 경우입니다."});
+add({sec:5,t:"보장지도 운영 방법",html:'<header class="hd"><span class="sec">5</span><h2>최소성취수준 보장지도 운영 방법</h2></header><div class="bd"><div class="cols c2" style="height:330px"><div class="card"><h3>예방지도</h3><p class="small">방과후 지도, 방과후 기초학력 보장 프로그램, 보충과제 부여, 학습멘토링, 정서 지원 프로그램, 교과 수업시간에 별도 지도, 다문화학생 특별학급(한국어학급) 수업, 학습흥미 및 동기형성 프로그램, 상담, 컨설팅 등</p></div><div class="card org"><h3>보충지도 (추가학습)</h3><p class="small">방과후(방학중) 대면지도(실시간 쌍방향 온라인 수업 포함), 온라인 콘텐츠(EBSi, KEDI) 수강, 보충 과제 부여, 학습멘토링, 학습흥미 및 동기형성 프로그램, 상담, 컨설팅 등</p></div></div><div class="band" style="position:static;margin-top:24px">1학점당 3시수 (전체 보장지도 시간 중 80%까지 예방지도 인정)</div></div>',
+  notes:"방법의 예시와 시수 기준. 1학점당 3시수이고 전체 보장지도 시간의 80%까지 예방지도로 인정합니다."});
+add({sec:5,t:"이수 인정·보장지도 적용 표",html:'<header class="hd"><span class="sec">5</span><h2>학점 이수 인정과 보장지도, 과목 유형별 적용</h2></header><div class="bd" style="font-size:19px">'+T(["구분","출석률","학업성취율","최소 성취수준 보장지도","추가학습"],[["학교 내 개설 모든 과목 (교양 제외)","적용","적용","적용","제공"],["교양 과목","적용","미적용 (성취수준 P)","대상 제외","제공"],["창의적 체험활동","적용 (3년간 운영 횟수의 2/3)","미적용","대상 제외","별도 이수 기회 (학기 내 별도 창체)"],["공동교육과정·온라인학교","적용","적용","적용","제공"],["학교 밖 교육","적용","미적용 (성적 미산출)","대상 제외","<span class=\"red\">미제공</span> (특성상 어려움)"]],"sm")+'<p class="small" style="margin-top:14px">학생 상황(특수교육대상, 학생선수, 직업계고 등)과 전·편입생 등은 별도 기준이 안내되어 있다. 최신 지침을 확인하세요.</p></div>',
+  notes:"과목 유형별로 이수 기준과 보장지도가 어떻게 달라지는지. 학교 밖 교육은 성적이 산출되지 않고 추가학습도 어렵다는 점이 핵심입니다. 세부 기준은 최신 지침으로 확인합니다."});
+
+/* 6. 현장 */
+add({sec:6,t:"주요 비판점",html:'<header class="hd"><span class="sec">6</span><h2>주요 비판점</h2></header><div class="bd"><div class="cols c2" style="grid-template-columns:1fr 150px 1fr"><div style="display:grid;gap:14px;align-content:start"><div class="card" style="padding:14px 22px"><b>내신 평가 체계와의 충돌</b></div><div class="card org" style="padding:14px 22px"><b>교사 및 인프라 부족</b></div><div class="card" style="padding:14px 22px"><b>학생 혼란, 자퇴 및 사교육 증가</b></div><div class="card" style="padding:14px 22px"><b>제도의 일관성·공정성·준비 부족</b></div><div class="card" style="padding:14px 22px"><b>학교 현장의 낮은 수용성</b></div></div><div class="arrow" style="font-size:60px">→</div><div style="display:grid;gap:14px;align-content:center"><div class="card hlc" style="padding:14px 22px"><b>(학교 간) 공동교육과정</b></div><div class="card hlc" style="padding:14px 22px"><b>온라인학교</b></div><div class="card hlc" style="padding:14px 22px"><b>학교 밖 교육</b></div><div class="card ink" style="text-align:center;padding:12px"><b>교육자원 공유</b></div></div></div></div>',
+  notes:"주요 비판점 가운데 교사 및 인프라 부족은 공동교육과정, 온라인학교, 학교 밖 교육으로 교육자원을 공유하는 방식으로 대응하고 있습니다."});
+add({sec:6,t:"선생님들이 느끼는 고교학점제 (1)",html:'<header class="hd"><span class="sec">6</span><h2>선생님들이 느끼는 고교학점제 (1)</h2></header><div class="bd"><div style="display:grid;gap:12px;font-size:27px"><div class="card" style="padding:14px 24px"><b>미성숙한 아이들</b>이 진로 적성에 따른 과목을 선택할 수 있을까? 대부분 하고 싶어 하는 직업과 진로가 아직 결정되지 않았다.</div><div class="card" style="padding:14px 24px">진로·적성보다는 <b>대학 진학을 위한 유리한 과목 선택</b>, 그리고 <b>친구 따라 과목 선택</b>이 이루어지지 않는가?</div><div class="card" style="padding:14px 24px">왜 학생의 <b>미이수를 교사가 책임</b>져야 하는가?</div><div class="card" style="padding:14px 24px"><span class="red">누구를 위한 학점제인가?</span> 학생? 교사? 학부모?</div><div class="card" style="padding:14px 24px">그 외에도 교사 확보, 공간, 블록수업, 최소 성취수준 보장지도, 교과교사 출결업무 등 <b>너무 많은 어려움</b>이 있다</div></div></div>',
+  notes:"교사들이 느끼는 어려움. 질문 형태로 던져 청중이 스스로 입장을 생각하게 합니다."});
+add({sec:6,t:"선생님들이 느끼는 고교학점제 (2)",html:'<header class="hd"><span class="sec">6</span><h2>선생님들이 느끼는 고교학점제 (2)</h2></header><div class="bd"><div style="display:grid;gap:12px;font-size:27px"><div class="card" style="padding:14px 24px">수업 ‘결과’ 처리 기준이 학교마다 다를 수 있나?</div><div class="card" style="padding:14px 24px">왜 일과 이후, 야간, 방학 중 최소 성취수준 보장지도를 하는데 <b>지도 수당</b>을 받지 못하는가?</div><div class="card" style="padding:14px 24px">예방지도, 보충지도, 추가학습? <b>모두 이수시키려는 것</b>인가?</div><div class="card" style="padding:14px 24px">이주배경, 학생운동선수, 특수교육대상자, 장기 진료자 등 <b>예외</b>?</div><div class="card" style="padding:14px 24px">형식적인 보장지도, 정말 <b>졸업을 시키지 않을 것</b>인가?</div><div class="card" style="padding:14px 24px"><span class="red">고교학점제 폐지해야 하는 것은 아닌가?</span></div></div></div>',
+  notes:"교사들이 현장에서 던지는 질문들. 정답을 말하기보다 현장의 질문으로 받아 주는 것이 중요합니다."});
+add({sec:6,t:"학생이 느끼는 고교학점제",html:'<header class="hd"><span class="sec">6</span><h2>학생이 느끼는 고교학점제 (단점)</h2></header><div class="bd"><div class="cols c2" style="grid-template-rows:1fr 1fr"><div class="card"><h3>선택의 어려움과 부담</h3><ul class="small"><li>진로가 불확실한 학생은 과목 선택에 혼란</li><li>잘못 선택하면 진로 변경 시 불이익 우려</li></ul></div><div class="card"><h3>학교 간 교육격차</h3><ul class="small"><li>학교별로 개설 과목이 달라 원하는 과목을 수강할 수 없음</li><li>도시와 농촌 지역 간 불균형 심화</li></ul></div><div class="card"><h3>과목 간 난이도 차이</h3><ul class="small"><li>특정 과목이 과도하게 어렵거나 너무 쉬운 경우 발생</li><li>성적 관리가 어려워질 수 있음</li></ul></div><div class="card"><h3>시간표 조정의 불편함</h3><ul class="small"><li>과목 선택이 겹치면 원하는 수업을 수강하지 못할 수 있음</li><li>이동 수업이 늘고 학급에 대한 소속감이 줄어듦</li></ul></div></div></div>',
+  notes:"학생 입장의 단점 네 가지."});
+add({sec:6,t:"학부모가 느끼는 고교학점제",html:'<header class="hd"><span class="sec">6</span><h2>보호자가 느끼는 고교학점제 (단점)</h2></header><div class="bd"><div class="cols c3"><div class="card"><h3 class="red">정보 부족과 혼란</h3><ul class="small"><li>제도와 진로에 대한 충분한 정보 부족</li><li>과목 선택이 자녀에게 어떤 영향을 줄지 판단이 어려움</li></ul></div><div class="card"><h3>사교육 의존 증가 우려</h3><ul class="small"><li>학교에서 개설되지 않은 과목을 외부에서 배우려고 함</li><li>진로상담, 학습 설계에 대한 사교육 수요 증가 가능</li></ul></div><div class="card"><h3>격차 심화 우려</h3><ul class="small"><li>교육 자원이 풍부한 지역과 그렇지 않은 지역의 격차</li><li>가정의 경제력, 정보력에 따라 유불리 존재</li></ul></div></div></div>',
+  notes:"보호자의 걱정 세 가지. 정보 제공과 상담의 중요성으로 연결합니다."});
+add({sec:6,t:"교육과정 변화에 따른 제도적 특징",html:'<header class="hd"><span class="sec">6</span><h2>교육과정 변화에 따른 고등학교 제도적 특징</h2></header><div class="bd"><div class="cols c3" style="height:380px"><div class="card"><div class="lb">과목</div><h3 style="font-size:36px;color:var(--pen)">수업횟수 축소<br>선택과목 확대<br>학기제 운영</h3></div><div class="card org"><div class="lb">평가(내신)</div><h3 style="font-size:36px;color:var(--pen)">성취평가제<br>상대평가(5등급제) 병기</h3></div><div class="card"><div class="lb">미이수 도입</div><h3 style="font-size:36px;color:var(--pen)">출석률 2/3<br>성취도 40% 이상</h3></div></div></div>',
+  notes:"교육과정 변화가 가져온 세 가지 제도적 특징: 과목, 평가, 미이수 도입."});
+
+/* 7. 대입 */
+add({sec:7,t:"대입 전형 4유형",html:'<header class="hd"><span class="sec">7</span><h2>대입 전형</h2></header><div class="bd"><div class="cols c4" style="height:140px"><div class="card ink" style="text-align:center;padding:18px"><b style="font-size:34px">교과</b></div><div class="card" style="text-align:center;padding:18px;background:#2D4373;color:#fff;border-color:#2D4373"><b style="font-size:34px">종합</b></div><div class="card" style="text-align:center;padding:18px;background:#4C8B3F;color:#fff;border-color:#4C8B3F"><b style="font-size:34px">논술</b></div><div class="card" style="text-align:center;padding:18px;background:#E3A808;color:#16223B;border-color:#E3A808"><b style="font-size:34px">수능</b></div></div><div class="cols c4" style="margin-top:26px;height:200px;font-size:24px"><div class="card">주로 반영: <b>교과</b></div><div class="card">주로 반영: <b>학생부</b></div><div class="card">주로 반영: <b>논술</b></div><div class="card">주로 반영: <b>수능</b></div></div></div>',
+  notes:"대입은 교과, 종합, 논술, 수능 네 가지 전형으로 나뉘고, 전형마다 주로 반영하는 자료가 다릅니다."});
+add({sec:7,t:"2028 대입: 학생부 비교과 축소",html:'<header class="hd"><span class="sec">7</span><h2>2028 대입 개편안 기준의 과목 선택 (기회)</h2></header><div class="bd"><div class="card hlc" style="margin-bottom:20px;padding:14px 24px"><b>학생부 비교과 영역 축소</b> · 2019년 대입 공정성 강화 방안으로 학교 생활기록부의 일부가 블라인드, 미반영, 미제공되어 실제로 평가의 주요 대상이 되는 것은 교사가 임하여 지도하는 교육활동으로 제한. 상대적으로 교육과정의 역할과 중요성이 증가했고, 과목 선택을 학생의 <span class="red">진로, 흥미, 역량</span> 등을 바탕으로 지도하는 것의 중요도가 증가</div><div class="cols c4" style="height:220px;font-size:22px"><div class="card" style="color:var(--ink2)">인적·학적사항<br>수상경력<br>자격증 및 인증 취득상황<br>독서활동상황</div><div class="card org"><b>출결사항</b></div><div class="card org"><b>창의적 체험활동상황</b><br><b>교과학습발달상황</b><br>(세부능력 및 특기사항)</div><div class="card org"><b>행동특성 및 종합의견</b></div></div></div>',
+  notes:"학생부에서 실제로 평가에 쓰이는 것이 교사가 지도하는 교육활동 중심으로 좁아졌고, 그만큼 교육과정과 과목 선택의 중요성이 커졌습니다."});
+add({sec:7,t:"학생부 종합·교과",html:'<header class="hd"><span class="sec">7</span><h2>2028 대입 개편안 기준의 과목 선택 (기회)</h2></header><div class="bd"><div class="card hlc" style="margin-bottom:16px;padding:12px 22px;font-size:23px">대학은 고등학교 교육과정을 벗어난 전형·평가를 실시하기 어렵다. 학생부 교과전형도 정성 평가를 일부 반영하며, <b>학생부 종합전형은 정성 평가가 기본</b>이다. 공동체 역량(인성)을 바탕으로 <b>과목 선택/학습 방식</b>을 통해 학업 가능 여부를 종합적으로 평가한다.</div><div class="cols c2" style="height:290px"><div class="card"><div class="lb">학업 역량</div><div class="small">교과 이수 상황으로 기본적인 학습태도와 역량의 제고 여부를 반영 (학업성취도, 학업태도, 탐구력)</div></div><div class="card org"><div class="lb">진로 역량</div><div class="small">모집단위와 유관한 과목을 학생의 역량과 교육과정의 <b>위계</b>에 맞게 이수하고 성취하였는지 평가 (전공 관련 교과 이수 노력, 교과 성취도, 진로 탐색 활동과 경험)</div></div></div></div>',
+  notes:"학생부 종합전형은 과목 선택과 학습 방식을 통해 학업·진로 역량을 봅니다. 모집단위와 유관한 과목을 위계에 맞게 이수했는지가 평가 대상입니다."});
+add({sec:7,t:"통합형·융합형 수능",html:'<header class="hd"><span class="sec">7</span><h2>2028 대입 개편안 기준의 과목 선택 (위기)</h2></header><div class="bd"><div class="card hlc" style="margin-bottom:16px;padding:12px 22px;font-size:23px">선택과목제에서 학생들이 진로나 적성보다 점수 유불리로 과목을 선택하는 문제가 있어, 선택과목제를 폐지하고 <b>융합형 학습을 유도</b>한다는 취지. 수능만 고려하거나 전혀 고려하지 않으면 학생의 올바른 진로 결정에 방해가 될 수 있다 ⇒ <span class="red"><b>전략적인 교육과정보다 기본에 충실한 교육과정</b>을 편성·운영해야 한다.</span></div>'+T(["영역","출제 범위","평가"],[["국어","공통 (화법과 언어, 독서와 작문, 문학)","상대평가"],["수학","공통 (대수, 미적분Ⅰ, 확률과 통계)","상대평가"],["영어","공통 (영어Ⅰ, 영어Ⅱ)","절대평가"],["한국사","공통 (한국사)","절대평가"],["탐구","사회·과학: 공통(통합사회, 통합과학) / 직업: 공통(성공적인 직업생활)","상대평가"],["제2외국어/한문","9과목 중 택1","절대평가"]],"sm")+'</div>',
+  notes:"2028학년도 수능은 선택과목제를 폐지하고 통합형·융합형으로 바뀝니다. 점수 유불리 때문에 과목을 고르는 문제를 줄이려는 취지입니다."});
+add({sec:7,t:"성적 산출 방법과 수능·논술",html:'<header class="hd"><span class="sec">7</span><h2>2028 대입 개편안 기준의 과목 선택 (위기)</h2></header><div class="bd"><div class="cols c2"><div class="card"><div class="lb">과목별 성적 산출 방법</div><p class="small">2015 개정에서는 진로선택과목의 성취평가(절대평가 A~C)로 내신 관리에 쉬운 과목을 선택하는 경향이 있었고, 일반선택 과목의 기피는 교과별 학문 영역 내 주요 내용의 이해 부족으로 이어졌다.<br>2022 개정에서도 대부분 과목이 상대평가라 <b>수강자 수가 많은 과목 중심으로 선택</b>하거나, <b>절대평가만 적용하는 사회·과학 융합선택을 집중 선택</b>하여 필요한 과목을 이수하지 않는 상황이 발생하지 않도록 지도해야 한다.</p></div><div class="card org"><div class="lb">수능 · 논술</div><p class="small">수능(선택과목제 폐지, 통합형·융합형 과목체계)과 논술 전형(이해력 바탕의 인문 논술, 문제해결력 중심의 자연 논술)을 고려하여 <b>수능·논술 전형만 준비하는 학생이 교실과 분리되지 않도록</b> 관심과 지도가 필요하다.</p></div></div></div>',
+  notes:"선택이 점수 유불리와 수강자 수로 쏠리지 않도록 하는 지도와, 수능·논술만 준비하는 학생이 교실에서 분리되지 않도록 하는 관심이 필요합니다."});
+
+/* 8. 함께 해 보기 */
+add({sec:8,t:"함께 해 보기",html:function(){
+  var A=CONFIG.apps;
+  function card(n,t,d,go){return '<div class="card" style="display:flex;gap:16px;align-items:center;padding:6px 18px"><span class="num-c">'+n+'</span><div style="flex:1"><b style="font-size:25px">'+t+'</b><div class="dim" style="font-size:18px;line-height:1.3">'+d+'</div></div>'+(go?'<a class="btnl" href="#" data-go="'+go+'" style="font-size:20px;padding:6px 16px">열기</a>':'')+'</div>';}
+  return '<header class="hd"><span class="sec">8</span><h2>함께 해 보기</h2></header><div class="bd"><div style="display:grid;gap:7px">'+
+   card(1,"경험 설문","고등학교 때 과목을 어떻게 골랐나","survey")+card(2,"퀴즈","O/X, 이수 판정, 학점·편제 숫자","quiz")+card(3,"192학점 시간표 짜기","한 학생의 3년 시간표를 직접","sim")+card(4,"역할 토론","입장 카드를 뽑고 토론, 마지막 질문","roles")+card(5,"AI 오류 찾기","AI의 답에서 틀린 곳을 찾기","ai")+card(6,"한 줄 소감","오늘 배운 것, 해 보고 싶은 것","feedback")+'</div></div>';},
+  notes:"실습 활동 목록입니다. 순서에 얽매이지 않고 흐름에 맞게 필요한 활동을 골라 쓰세요. 각 항목의 '열기'로 해당 슬라이드로 이동합니다."});
+add({sec:8,t:"경험 설문",id:"survey",html:function(){return '<div class="stmt"><h1 class="sm">고등학교 때 선택과목,<br>어떤 기준으로 골랐나요?</h1><div class="small dim" style="font-size:26px">익명 · 약 1분 · 스마트폰으로 참여</div>'+(CONFIG.survey?'<a class="btnl" href="'+CONFIG.survey+'" target="_blank" rel="noopener">설문 열기</a><div class="xs">'+CONFIG.survey.replace(/^https?:\/\//,"")+'</div>':'<div class="tag">설문 주소를 CONFIG.survey에 넣어 주세요</div>')+'</div>';},
+  notes:"설문을 시작합니다. 결과는 설문 서비스 로그인 후 요약 화면에서 확인해 슬라이드 '주도성은 어디서 길러질까?'에서 읽어 줍니다. 설문 주소는 CONFIG에서 바꿀 수 있습니다."});
+function frameSlide(id,title,sub,key){
+  add({sec:8,t:title,id:id,cls:"frame",html:function(){var u=CONFIG.apps[key];return '<div class="frame"><div class="fh"><b>'+title+'</b><span>'+sub+'</span><a href="'+u+'" target="_blank" rel="noopener">새 탭에서 열기 ↗</a></div><iframe data-src="'+u+'" title="'+title+'" allow="clipboard-write"></iframe></div>';},
+   notes:sub+"\n\n※ 이 슬라이드 안에서 앱을 직접 조작합니다. 방향키가 앱에 먹히면 슬라이드 바깥을 한 번 클릭하거나 화면 아래 ‘이전/다음’ 버튼을 누르세요. 앱이 보이지 않으면 ‘새 탭에서 열기’를 쓰세요."});
+}
+frameSlide("quiz","고교학점제 퀴즈","라운드를 고르세요. 판정 케이스와 숫자 퀴즈는 ‘함께 보기’ 모드가 편해요","quiz");
+frameSlide("sim","192학점 시간표 짜기","학생 유형을 정하고 126학점을 채웁니다","sim");
+frameSlide("roles","역할 뽑기 토론","조 번호로 역할을 받고, 마지막에 ‘학생 주도성은 어떻게 기를 것인가?’","roles");
+add({sec:8,t:"AI 오류 찾기",id:"ai",html:'<header class="hd"><span class="sec">8</span><h2>AI 오류 찾기: 같은 질문을 AI에 그대로 입력해 보세요</h2></header><div class="bd" style="font-size:20px">'+T(["#","AI에 입력할 질문","정답 (한 번 눌러 공개)","이런 오류를 찾아보세요"],[
+ ["1","2022 개정 교육과정 고등학교의 총 이수 학점, 필수 이수 학점, 자율 이수 학점을 알려줘.",'<span class="st" data-st="1">192학점: 필수 84 + 자율 90 + 창체 18(288시간)</span>','<span class="st" data-st="1">2015 개정 수치(94/80), 단위 개념, 204단위와 혼동</span>'],
+ ["2","고교학점제에서 과목 이수 기준과 기준에 못 미친 학생이 받는 지도를 설명해 줘.",'<span class="st" data-st="1">출석 2/3 이상 + 성취율 40% 이상, 예방·보충·추가학습</span>','<span class="st" data-st="1">성취율 기준 누락, 낙제·유급 용어</span>'],
+ ["3","2022 개정 적용 시기를 학년별로 알려줘. 2026년 현재 고3은 어떤 교육과정이야?",'<span class="st" data-st="1">2024 초1~2 … 2027 중3·고3, 현재 고3은 2015 개정</span>','<span class="st" data-st="1">고3도 2022 개정이라고 답함, 한꺼번에 적용으로 서술</span>'],
+ ["4","2022 개정에서 1학점은 몇 회 수업이야? 2015 개정과는 어떻게 달라?",'<span class="st" data-st="1">16회 (2015는 17회)</span>','<span class="st" data-st="1">17회로 답함, 단위와 학점 혼용</span>'],
+ ["5","2022 개정 고등학교 보통교과 선택과목의 유형과 개수를 알려줘.",'<span class="st" data-st="1">일반 36 · 진로 64 · 융합 38, 총 138개</span>','<span class="st" data-st="1">융합선택 누락, 물리학Ⅱ 등 2015 과목 등장</span>'],
+ ["6","2028학년도 수능 국어, 수학, 탐구 영역의 출제 범위와 평가 방식을 알려줘.",'<span class="st" data-st="1">국·수 공통 범위 상대평가, 탐구는 통합사회·통합과학, 영어·한국사 절대평가</span>','<span class="st" data-st="1">선택과목(확률과 통계·미적분·기하)이 그대로라고 서술</span>']],"sm")+'<p class="xs" style="margin-top:8px">오류 유형: 개정 혼동 · 숫자 오류 · 용어 오류 · 최신 반영 실패 · 그럴듯한 지어냄 &nbsp;|&nbsp; 다음 키를 누르면 정답이 열려요</p></div>',
+  steps:1,
+  notes:"질문 3개 정도를 골라 AI에 입력하게 하고, 틀린 곳을 찾게 합니다. 다음 키를 누르면 정답과 자주 나오는 오류가 열립니다.\n\n※ 이수 기준(2번)은 2026.1.21 개정 내용과 최신 지침을 확인해 수치를 맞춰 두세요."});
+add({sec:8,t:"AI는 유창하게 틀립니다",cls:"stmt",html:'<div class="stmt"><h1 class="sm">AI는 유창하게 틀립니다</h1><div style="font-size:32px">교사에게 필요한 것은 AI를 쓰지 않는 능력이 아니라<br><span class="hl">확인할 근거를 가진 능력</span><br>고시된 교육과정과 지침 같은 1차 자료를 읽는 힘</div><div class="pill" style="margin-top:16px">도구를 쓰되, 판단하고 책임지는 사람 — 그것이 주도성</div></div>',
+  notes:"AI는 유창하게 틀립니다. 교사에게 필요한 것은 AI를 쓰지 않는 능력이 아니라 확인할 근거를 가진 능력입니다. 이것은 학생 주도성과도 이어집니다."});
+add({sec:8,t:"한 줄 소감",id:"feedback",html:function(){return '<div class="stmt"><h1 class="sm">오늘 배운 것 하나,<br>교사가 되면 해 보고 싶은 것 하나</h1>'+(CONFIG.feedback?'<a class="btnl" href="'+CONFIG.feedback+'" target="_blank" rel="noopener">소감 쓰기</a><div class="xs">'+CONFIG.feedback.replace(/^https?:\/\//,"")+'</div>':'<div class="tag">소감 폼 주소를 CONFIG.feedback에 넣어 주세요</div>')+'</div>';},
+  notes:"익명의 한 줄 소감을 받습니다."});
+
+/* 9. 마무리 */
+add({sec:9,t:"오늘의 세 줄",cls:"stmt",html:'<div class="stmt"><div class="mid dim">오늘의 세 줄</div><div style="text-align:left;display:flex;flex-direction:column;gap:20px;font-size:38px;font-weight:700;line-height:1.35"><div><span class="num-c" style="width:52px;height:52px;font-size:26px;vertical-align:middle">1</span> 학생 주도성은 <span class="hl" style="font-size:38px">선택하고 책임지는 경험</span>에서 자란다</div><div><span class="num-c" style="width:52px;height:52px;font-size:26px;vertical-align:middle">2</span> 고교학점제 = <span class="hly">선택</span> + <span class="hly">책임</span> + <span class="hly">받침</span> (보장지도, 공동교육과정 등)</div><div><span class="num-c" style="width:52px;height:52px;font-size:26px;vertical-align:middle">3</span> 제도가 작동하려면 <span class="hl" style="font-size:38px">상담·정보·자원</span>, 그리고 그 받침이 되는 교사가 필요하다</div></div></div>',
+  notes:"오늘의 핵심 세 줄로 마무리합니다. 한 줄 소감을 받는다면 이 슬라이드를 띄운 채 안내하세요."});
+add({sec:9,t:"충남 고교학점제 종합지원 온마당",cls:"stmt",html:'<div class="stmt"><div class="mid dim">더 알고 싶다면</div><h1 class="sm">충남 고교학점제 종합지원<br><span style="color:var(--org)">온마당</span></h1><div class="btnl" style="font-size:34px;padding:12px 34px;cursor:default">www.onmadang.or.kr</div><div class="big" style="font-size:40px;margin-top:16px">감사합니다</div></div>',
+  notes:"참고 사이트(온마당) 안내와 마무리 인사. 강의 후 출결·설문 안내가 있으면 이 슬라이드를 띄운 채 진행합니다."});
+
+/* ============ 엔진 ============ */
+var stage=document.getElementById("stage"),vp=document.getElementById("vp");
+var cur=0,step=0,N=S.length,maxStep=[],audience=!document.body.classList.contains("presenter");
+var presenter=QS.has("presenter");
+if(presenter)document.body.classList.add("presenter");
+
+function slideEl(i){return stage.children[i]}
+function build(){
+  stage.innerHTML="";
+  S.forEach(function(s,i){
+    var d=document.createElement("section");
+    d.className="slide";d.setAttribute("data-i",i);
+    d.innerHTML=(typeof s.html==="function"?s.html():s.html)+'<div class="num">'+(i+1)+' / '+N+'</div>';
+    stage.appendChild(d);
+    maxStep[i]=d.querySelectorAll(".st").length?1:0;
+  });
+}
+function fit(){
+  var w=vp.clientWidth,h=vp.clientHeight,k=Math.min(w/1280,h/720);
+  stage.style.transform="scale("+k+")";
+  stage.style.left=((w-1280*k)/2)+"px";stage.style.top=((h-720*k)/2)+"px";
+  if(presenter)fitNext();
+}
+function show(i,st,fromRemote){
+  cur=Math.max(0,Math.min(N-1,i));step=st||0;
+  Array.prototype.forEach.call(stage.children,function(e,k){e.classList.toggle("on",k===cur)});
+  var el=slideEl(cur);
+  Array.prototype.forEach.call(el.querySelectorAll(".st"),function(e){e.classList.toggle("show",step>=+e.getAttribute("data-st"))});
+  var fr=el.querySelector("iframe[data-src]");
+  if(fr&&!fr.getAttribute("src")&&!presenter)fr.setAttribute("src",fr.getAttribute("data-src"));
+  document.getElementById("pg").textContent=(cur+1)+" / "+N;
+  document.getElementById("prog").style.width=((cur+1)/N*100)+"%";
+  document.title=S[cur].t+" · "+CONFIG.lecture;
+  try{if(history.replaceState)history.replaceState(null,"","#"+(cur+1))}catch(e){}
+  if(presenter)paintPresenter();
+  if(!fromRemote)send();
+}
+function next(){if(step<(maxStep[cur]||0))show(cur,step+1);else if(cur<N-1)show(cur+1,0)}
+function prev(){if(step>0)show(cur,step-1);else if(cur>0)show(cur-1,maxStep[cur-1]||0)}
+function goSec(k){for(var i=0;i<N;i++){if(S[i].sec==k){show(i,0);return}}}
+function goId(id){for(var i=0;i<N;i++){if(S[i].id===id){show(i,0);return}}}
+
+/* 동기화 (발표자 창 ↔ 청중 창) */
+var ch=null;try{ch=new BroadcastChannel("lecture-deck")}catch(e){}
+function send(){if(ch)ch.postMessage({i:cur,s:step})}
+if(ch)ch.onmessage=function(e){if(e.data&&typeof e.data.i==="number")show(e.data.i,e.data.s,true)};
+
+/* 목차 */
+var ov=document.getElementById("ov");
+function openOv(){
+  var html='<div class="hdr"><b>목차 · 슬라이드 선택</b><button id="ovx">닫기 (Esc)</button></div>';
+  var last=-1;
+  S.forEach(function(s,i){
+    if(s.sec!==last){if(last!==-1)html+='</div>';last=s.sec;html+='<h3>'+(s.sec?s.sec+'. '+SECS[s.sec]:'시작')+'</h3><div class="thumbs">'}
+    html+='<button class="th'+(i===cur?" cur":"")+'" data-go-i="'+i+'" title="'+s.t.replace(/"/g,"")+'"><div class="mini" data-m="'+i+'"></div><span class="n">'+(i+1)+' '+s.t+'</span></button>';
+  });
+  html+='</div>';
+  ov.innerHTML=html;ov.hidden=false;
+  Array.prototype.forEach.call(ov.querySelectorAll(".mini"),function(m){
+    var i=+m.getAttribute("data-m");
+    m.innerHTML=slideEl(i).innerHTML.replace(/<iframe[^>]*><\/iframe>/g,'<div style="flex:1;display:grid;place-items:center;font-size:44px;color:var(--ink2)">앱 화면 (슬라이드 안에서 실행)</div>');
+    var th=m.parentNode,k=th.clientWidth/1280;m.style.transform="scale("+k+")";
+  });
+  var c=ov.querySelector(".cur");if(c)c.scrollIntoView({block:"center"});
+}
+function closeOv(){ov.hidden=true;ov.innerHTML=""}
+ov.addEventListener("click",function(e){
+  if(e.target.id==="ovx"){closeOv();return}
+  var t=e.target.closest("[data-go-i]");if(t){show(+t.getAttribute("data-go-i"),0);closeOv()}
+});
+
+/* 발표자 화면 */
+function fitNext(){
+  var nx=document.getElementById("pnx");if(!nx)return;
+  var m=nx.firstChild;if(m)m.style.transform="scale("+(nx.clientWidth/1280)+")";
+}
+function paintPresenter(){
+  var nx=document.getElementById("pnx");
+  var n=cur<N-1?cur+1:null;
+  nx.innerHTML=n===null?'<div style="color:#9db0da;padding:16px">마지막 슬라이드입니다</div>':'<div class="mini">'+slideEl(n).innerHTML.replace(/<iframe[^>]*><\/iframe>/g,'<div style="flex:1;display:grid;place-items:center;font-size:44px;color:var(--ink2)">앱 화면 (슬라이드 안에서 실행)</div>')+'</div>';
+  fitNext();
+  document.getElementById("pnotes").textContent=(S[cur].notes||"(노트 없음)");
+}
+var t0=Date.now();
+function tick(){
+  var d=new Date(),el=Math.floor((Date.now()-t0)/1000);
+  var p=document.getElementById("pel"),n=document.getElementById("pnow");
+  if(p)p.textContent=String(Math.floor(el/60)).padStart(2,"0")+":"+String(el%60).padStart(2,"0");
+  if(n)n.textContent=String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+}
+setInterval(tick,500);
+document.getElementById("prst").addEventListener("click",function(){t0=Date.now()});
+function openPresenter(){window.open(location.pathname+"?presenter#"+(cur+1),"deck-presenter","width=1180,height=720")}
+
+/* 입력 */
+document.addEventListener("keydown",function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  if(!ov.hidden){if(e.key==="Escape"||e.key==="o"||e.key==="O")closeOv();return}
+  var k=e.key;
+  if(k==="ArrowRight"||k==="ArrowDown"||k==="PageDown"||k==="Enter"||k===" "){e.preventDefault();next()}
+  else if(k==="ArrowLeft"||k==="ArrowUp"||k==="PageUp"||k==="Backspace"){e.preventDefault();prev()}
+  else if(k==="Home"){show(0,0)}
+  else if(k==="End"){show(N-1,0)}
+  else if(k==="o"||k==="O"||k==="Escape"){openOv()}
+  else if(k==="f"||k==="F"){toggleFs()}
+  else if(k==="b"||k==="B"||k==="."){document.body.classList.toggle("blank")}
+  else if(k==="p"||k==="P"){if(!presenter)openPresenter()}
+});
+function toggleFs(){
+  var d=document;
+  if(!d.fullscreenElement){(d.documentElement.requestFullscreen||function(){}).call(d.documentElement)}else d.exitFullscreen();
+}
+document.getElementById("bPrev").onclick=prev;
+document.getElementById("bNext").onclick=next;
+document.getElementById("bOv").onclick=openOv;
+document.getElementById("bPres").onclick=openPresenter;
+document.getElementById("bFs").onclick=toggleFs;
+if(presenter){document.getElementById("bPres").style.display="none";document.getElementById("bFs").style.display="none"}
+/* 스와이프 */
+var sx=null;
+vp.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
+vp.addEventListener("touchend",function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>60){if(dx<0)next();else prev()}sx=null},{passive:true});
+/* 슬라이드 안 링크 */
+stage.addEventListener("click",function(e){
+  var s=e.target.closest("[data-sec]");if(s){e.preventDefault();goSec(s.getAttribute("data-sec"));return}
+  var g=e.target.closest("[data-go]");if(g){e.preventDefault();var id=g.getAttribute("data-go");
+    if(id==="survey"||id==="feedback"||id==="quiz"||id==="sim"||id==="roles"||id==="ai")goId(id);return}
+  if(e.target.closest("a,button,iframe"))return;
+  // 빈 곳 클릭: 오른쪽 절반 다음, 왼쪽 1/4 이전
+  var r=vp.getBoundingClientRect(),x=(e.clientX-r.left)/r.width;
+  if(x>0.25)next();else prev();
+});
+/* 유휴 시 컨트롤 숨김 */
+var idleT;function wake(){document.body.classList.remove("idle");clearTimeout(idleT);idleT=setTimeout(function(){document.body.classList.add("idle")},2800)}
+["mousemove","mousedown","touchstart","keydown"].forEach(function(ev){document.addEventListener(ev,wake,{passive:true})});wake();
+setTimeout(function(){document.getElementById("help").classList.add("gone")},6000);
+window.addEventListener("resize",function(){fit();if(!ov.hidden)openOv()});
+window.addEventListener("hashchange",function(){var n=parseInt((location.hash||"").slice(1),10);if(!isNaN(n)&&n-1!==cur)show(n-1,0,true)});
+
+build();fit();
+var h=parseInt((location.hash||"").slice(1),10);
+show(isNaN(h)?0:h-1,0,true);
+})();
+</script>
+</body>
+</html>
