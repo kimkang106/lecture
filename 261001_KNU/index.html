@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>2022 개정교육과정과 고교학점제 · 충남교육전문가특강</title>
+<title>2022 개정교육과정과 고교학점제 · 충남교육전문가특강 다시 보기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,19 +13,19 @@
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
   --bg:#EEF1F7; --paper:#FFFFFF; --ink:#16223B; --ink2:#55627E; --line:#D3DAE8; --grid:rgba(22,34,59,.055);
-  --hl:#FFE566; --hl-soft:#FFF4B8; --hl-edge:#E2C200; --pen:#D22B45;
+  --hl:#FFE566; --hl-soft:#FFF4B8; --hl-edge:#E2C200;
   --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --display:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
-    --hl-soft:#3B3618; --hl-edge:#C9A92A; --pen:#FF6B81;
+    --hl-soft:#3B3618; --hl-edge:#C9A92A;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0F1524; --paper:#182036; --ink:#E9EEF9; --ink2:#A5B1CB; --line:#2B3654; --grid:rgba(233,238,249,.05);
-  --hl-soft:#3B3618; --hl-edge:#C9A92A; --pen:#FF6B81;
+  --hl-soft:#3B3618; --hl-edge:#C9A92A;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
@@ -37,37 +37,30 @@ a{color:inherit}
 .kicker{font-size:13.5px;font-weight:700;color:var(--ink2);margin:0}
 .subject{font-size:16px;font-weight:700;margin:6px 0 0}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9vw,50px);line-height:1.15;margin:6px 0 0;word-break:keep-all}
-.ses{display:inline-block;margin-top:10px;border:1.5px solid var(--ink);border-radius:99px;padding:2px 12px;font-size:13.5px;font-weight:700;background:var(--hl)}
-.ses{color:#16223B}
+.ses{display:inline-block;margin-top:10px;border:1.5px solid var(--ink);border-radius:99px;padding:2px 12px;font-size:13.5px;font-weight:700;background:var(--hl);color:#16223B}
 .info{margin:18px 0 0;background:var(--paper);border:1.5px solid var(--ink);border-radius:14px;padding:4px 16px;box-shadow:4px 4px 0 var(--ink)}
 .info div{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:9px 0;border-top:1px dashed var(--line)}
 .info div:first-child{border-top:0}
 .info dt{font-weight:700;color:var(--ink2);margin:0}
 .info dd{margin:0;word-break:keep-all}
-.need{margin:14px 0 0;background:var(--hl-soft);border:1.5px solid var(--hl-edge);border-radius:10px;padding:8px 14px;font-weight:700}
-h2{font-family:var(--display);font-weight:400;font-size:24px;margin:28px 0 4px}
-.lead{margin:0 0 12px;color:var(--ink2);font-size:14.5px}
-ol.flow{list-style:none;margin:0;padding:0;position:relative}
-ol.flow::before{content:"";position:absolute;left:19px;top:14px;bottom:14px;width:2px;background:var(--line)}
-.st{position:relative;display:grid;grid-template-columns:40px 1fr;gap:12px;margin:0 0 14px}
-.st .no{position:relative;z-index:1;width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);display:grid;place-items:center;font-family:var(--display);font-size:19px}
-.st .box{background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px 12px;min-width:0}
-.st .tm{font-size:13px;font-weight:700;color:var(--ink2);font-variant-numeric:tabular-nums}
-.st h3{margin:0;font-size:17.5px;line-height:1.4;word-break:keep-all}
-.st p{margin:3px 0 0;font-size:14.5px;color:var(--ink2);word-break:keep-all}
-.st .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.btn{display:inline-block;text-decoration:none;border:1.5px solid var(--ink);background:var(--hl);color:#16223B;border-radius:10px;padding:8px 14px;font-weight:700;font-size:15px;box-shadow:3px 3px 0 var(--ink)}
-.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.tag{display:inline-block;font-size:13px;font-weight:700;color:var(--ink2);border:1.5px dashed var(--line);border-radius:99px;padding:1px 10px;margin-top:8px}
-.st.brk .box{background:transparent;border-style:dashed;padding:6px 14px}
-.st.brk .no{border-style:dashed;border-color:var(--line);color:var(--ink2);font-size:15px}
-.st.brk h3{font-size:15px;color:var(--ink2);font-weight:500}
-.st.now .box{border-color:var(--ink);background:var(--hl-soft);box-shadow:4px 4px 0 var(--ink)}
-.st.now .no{background:var(--pen);color:#fff;border-color:var(--pen)}
-.st.done{opacity:.6}
-.now-b{display:none;margin-left:8px;font-size:12px;font-weight:700;color:#fff;background:var(--pen);border-radius:99px;padding:1px 9px;vertical-align:2px}
-.st.now .now-b{display:inline-block}
-.foot{margin-top:26px;font-size:13px;color:var(--ink2);border-top:1.5px dashed var(--line);padding-top:12px}
+.msg{margin:14px 0 0;background:var(--hl-soft);border:1.5px solid var(--hl-edge);border-radius:10px;padding:8px 14px;font-weight:700;word-break:keep-all}
+h2{font-family:var(--display);font-weight:400;font-size:24px;margin:30px 0 4px}
+.lead{margin:0 0 12px;color:var(--ink2);font-size:14.5px;word-break:keep-all}
+.card{display:block;text-decoration:none;background:var(--paper);border:1.5px solid var(--ink);border-radius:14px;padding:14px 18px;margin-bottom:12px;box-shadow:3px 3px 0 var(--ink)}
+a.card:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.card b{display:block;font-size:19px;line-height:1.4}
+.card span{display:block;font-size:14.5px;color:var(--ink2);margin-top:2px;word-break:keep-all}
+.card.main{background:var(--hl);color:#16223B}
+.card.main span{color:#3b4660}
+.card.main b{font-size:22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px}
+.chip{display:inline-block;text-decoration:none;font-size:14px;font-weight:700;border:1.5px solid var(--line);background:var(--paper);border-radius:99px;padding:3px 12px}
+.chip:hover{border-color:var(--ink)}
+.keys{font-size:13.5px;color:var(--ink2);margin:0 0 12px}
+.keys kbd{font:inherit;font-weight:700;border:1.5px solid var(--line);border-radius:6px;padding:0 6px;background:var(--paper);color:var(--ink)}
+.sub{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.sub{grid-template-columns:1fr}}
+.foot{margin-top:30px;font-size:13px;color:var(--ink2);border-top:1.5px dashed var(--line);padding-top:12px;word-break:keep-all}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -76,90 +69,52 @@ ol.flow::before{content:"";position:absolute;left:19px;top:14px;bottom:14px;widt
   <p class="kicker">2026 충남교육청-국립공주대 관학협력사업 · 충남교육전문가특강</p>
   <p class="subject">미래사회에서의 교육과 수업의 혁신</p>
   <h1>2022 개정교육과정과 고교학점제</h1>
-  <span class="ses">4회차</span>
+  <span class="ses">4회차 · 다시 보기</span>
 
   <dl class="info">
     <div><dt>일시</dt><dd>2026. 10. 1.(목) 15:00~17:50 (7~9교시)</dd></div>
     <div><dt>장소</dt><dd>국립공주대 신관캠퍼스 글로벌우정연수관 317호</dd></div>
-    <div><dt>강사</dt><dd>충남교육청 중등교육과 장학사 김시형</dd></div>
     <div><dt>대상</dt><dd>국립공주대학교 학생</dd></div>
+    <div><dt>문의</dt><dd><a href="mailto:kimkang106@ai.cne.go.kr">kimkang106@ai.cne.go.kr</a></dd></div>
   </dl>
-  <div class="need">스마트폰을 꺼내 두세요. 오늘은 듣는 시간보다 해 보는 시간이 많아요.</div>
+  <div class="msg">강의는 끝났지만 자료는 그대로 열려 있어요. 복습하고, 직접 해 보고, 수업 설계의 참고로도 써 보세요.</div>
 
-  <h2>오늘의 진행 순서</h2>
-  <p class="lead">강의 진행에 맞춰 안내하면 버튼을 눌러 주세요. 미리 열어 두어도 괜찮아요.</p>
+  <h2>1. 강의 덱 다시 보기</h2>
+  <p class="lead">강의 때 사용한 슬라이드를 웹에서 그대로 볼 수 있어요. 설명 노트도 함께 볼 수 있어요.</p>
+  <a class="card main" href="deck.html"><b>강의 덱 열기</b><span>학생 주도성에서 교육과정, 고교학점제, 2028 대입까지 64장</span></a>
+  <p class="keys"><kbd>←</kbd> <kbd>→</kbd> 이동 · <kbd>O</kbd> 목차 · <kbd>N</kbd> 설명 노트 · <kbd>F</kbd> 전체화면</p>
+  <div class="chips">
+    <a class="chip" href="deck.html#sec1">학생 주도성</a>
+    <a class="chip" href="deck.html#sec2">교육과정이란</a>
+    <a class="chip" href="deck.html#sec3">2022 개정</a>
+    <a class="chip" href="deck.html#sec4">고등학교 변화</a>
+    <a class="chip" href="deck.html#sec5">고교학점제</a>
+    <a class="chip" href="deck.html#sec6">현장의 목소리</a>
+    <a class="chip" href="deck.html#sec7">2028 대입</a>
+    <a class="chip" href="deck.html#sec9">수업 설계</a>
+  </div>
 
-  <ol class="flow" id="flow">
-    <li class="st" data-s="15:00" data-e="15:10"><span class="no">1</span><div class="box">
-      <div class="tm">15:00~15:10</div><h3>도입 · 고교 시절 경험 설문<span class="now-b">지금</span></h3>
-      <p>고등학교 때 선택과목을 어떻게 골랐는지 1분이면 끝나요. 익명이에요.</p>
-      <div class="acts"><a class="btn" href="https://tally.so/r/pb84D8" target="_blank" rel="noopener">경험 설문 하기</a></div></div></li>
+  <h2>2. 직접 해 보기</h2>
+  <p class="lead">강의에서 함께 했던 활동이에요. 혼자서도 다시 해 볼 수 있어요.</p>
+  <a class="card" href="quiz.html"><b>고교학점제 퀴즈</b><span>O/X, 이수 판정 사례, 학점·편제 숫자 퀴즈</span></a>
+  <a class="card" href="simulator.html"><b>192학점 시간표 짜기</b><span>한 학생의 3년 시간표를 직접 짜 보는 시뮬레이션</span></a>
+  <a class="card" href="roles.html"><b>역할 뽑기 토론</b><span>교사·학생·학부모·입학사정관·교육청 담당자 중 한 입장이 되어 보고, ‘학생 주도성은 어떻게 기를 것인가’를 생각해 보기</span></a>
 
-    <li class="st" data-s="15:10" data-e="15:25"><span class="no">2</span><div class="box">
-      <div class="tm">15:10~15:25</div><h3>AI가 답을 아는 시대, 학생 주도성<span class="now-b">지금</span></h3>
-      <p>학교는 무엇을 가르쳐야 할까? 짝과 1분 토론을 합니다.</p>
-      <span class="tag">슬라이드로 진행</span></div></li>
+  <h2>3. 수업 설계 돌아보기</h2>
+  <p class="lead">예비교사를 위한 참고 자료예요. 3시간 강의를 구간별로 어떻게 설계했는지, 교실에 어떻게 응용할 수 있는지 정리했어요.</p>
+  <a class="card" href="hub.html"><b>수업 설계 돌아보기 · 강의 진행 콘솔</b><span>설계 원칙 4가지, 구간별 학습 목표와 활동, 교실 응용 팁. 슬라이더로 강의 진행 콘솔을 체험해 볼 수 있어요</span></a>
 
-    <li class="st" data-s="15:25" data-e="15:50"><span class="no">3</span><div class="box">
-      <div class="tm">15:25~15:50</div><h3>교육과정과 2022 개정 · 퀴즈 1<span class="now-b">지금</span></h3>
-      <p>교육과정의 흐름을 정리하고 O/X 퀴즈로 확인해요. 퀴즈에서 ‘라운드 1’을 고르세요.</p>
-      <div class="acts"><a class="btn" href="quiz.html" target="_blank" rel="noopener">퀴즈 열기</a></div></div></li>
+  <h2>4. 내 생각 남기기</h2>
+  <p class="lead">익명으로 남길 수 있어요.</p>
+  <div class="sub">
+    <a class="card" href="https://tally.so/r/pb84D8" target="_blank" rel="noopener"><b>경험 설문</b><span>고등학교 때 선택과목을 어떻게 골랐나요?</span></a>
+    <a class="card" href="https://tally.so/r/7R64ZP" target="_blank" rel="noopener"><b>한 줄 소감</b><span>배운 것 하나, 해 보고 싶은 것 하나</span></a>
+  </div>
 
-    <li class="st brk" data-s="15:50" data-e="16:00"><span class="no">쉼</span><div class="box">
-      <div class="tm">15:50~16:00</div><h3>휴식 10분<span class="now-b">지금</span></h3></div></li>
+  <h2>5. 더 알아보기</h2>
+  <a class="card" href="https://www.onmadang.or.kr" target="_blank" rel="noopener"><b>충남 고교학점제 종합지원 온마당</b><span>www.onmadang.or.kr · 고교학점제 관련 안내와 자료</span></a>
 
-    <li class="st" data-s="16:00" data-e="16:35"><span class="no">4</span><div class="box">
-      <div class="tm">16:00~16:35</div><h3>총론·편제와 학점 · 192학점 시간표 짜기<span class="now-b">지금</span></h3>
-      <p>한 학생의 3년 시간표를 직접 짜 봅니다. 조마다 다른 학생을 맡아요.</p>
-      <div class="acts"><a class="btn" href="simulator.html" target="_blank" rel="noopener">시간표 짜기</a></div></div></li>
-
-    <li class="st" data-s="16:35" data-e="16:50"><span class="no">5</span><div class="box">
-      <div class="tm">16:35~16:50</div><h3>이수 기준과 보장지도 · 퀴즈 2<span class="now-b">지금</span></h3>
-      <p>이수일까 미이수일까? 판정 케이스 퀴즈에서 ‘라운드 2’를 고르세요.</p>
-      <div class="acts"><a class="btn" href="quiz.html" target="_blank" rel="noopener">퀴즈 열기</a></div></div></li>
-
-    <li class="st brk" data-s="16:50" data-e="17:00"><span class="no">쉼</span><div class="box">
-      <div class="tm">16:50~17:00</div><h3>휴식 10분<span class="now-b">지금</span></h3></div></li>
-
-    <li class="st" data-s="17:00" data-e="17:08"><span class="no">6</span><div class="box">
-      <div class="tm">17:00~17:08</div><h3>현장의 목소리와 2028 대입<span class="now-b">지금</span></h3>
-      <p>고교학점제가 현장에서 부딪히는 문제와 대입 변화를 살펴봅니다.</p>
-      <span class="tag">슬라이드로 진행</span></div></li>
-
-    <li class="st" data-s="17:08" data-e="17:32"><span class="no">7</span><div class="box">
-      <div class="tm">17:08~17:32</div><h3>역할 토론 · 학생 주도성은 어떻게 기를 것인가<span class="now-b">지금</span></h3>
-      <p>조 번호를 눌러 역할 카드를 받고, 그 입장이 되어 이야기해 봅니다.</p>
-      <div class="acts"><a class="btn" href="roles.html" target="_blank" rel="noopener">역할 받기</a></div></div></li>
-
-    <li class="st" data-s="17:32" data-e="17:42"><span class="no">8</span><div class="box">
-      <div class="tm">17:32~17:42</div><h3>AI 오류 찾기<span class="now-b">지금</span></h3>
-      <p>화면에 나온 질문을 각자 쓰는 AI에 그대로 입력하고, 답변에서 틀린 곳을 찾아요.</p>
-      <span class="tag">화면의 질문을 입력</span></div></li>
-
-    <li class="st" data-s="17:42" data-e="17:50"><span class="no">9</span><div class="box">
-      <div class="tm">17:42~17:50</div><h3>마무리 · 한 줄 소감<span class="now-b">지금</span></h3>
-      <p>오늘 배운 것 하나, 교사가 되면 해 보고 싶은 것 하나를 적어 주세요. 익명이에요.</p>
-      <div class="acts"><a class="btn" href="https://tally.so/r/7R64ZP" target="_blank" rel="noopener">한 줄 소감 쓰기</a></div></div></li>
-  </ol>
-
-  <p class="foot">충청남도교육청 · 국립공주대학교 관학협력사업 「교원양성 협력」</p>
+  <p class="foot">이 자료는 강의 자료를 바탕으로 정리한 것이에요. 이수 기준 등 세부 수치는 정책 개정에 따라 달라질 수 있으니, 실제 적용 기준은 최신 교육부·교육청 고시와 지침을 확인하세요.<br>충청남도교육청 · 국립공주대학교 관학협력사업 「교원양성 협력」</p>
 </main>
-<script>
-(function(){
-  var d=new Date();
-  if(d.getFullYear()!==2026||d.getMonth()!==9||d.getDate()!==1)return;
-  var m=d.getHours()*60+d.getMinutes();
-  function mins(hm){var p=hm.split(":");return +p[0]*60+ +p[1]}
-  function mark(){
-    var d=new Date(),m=d.getHours()*60+d.getMinutes();
-    document.querySelectorAll("#flow .st").forEach(function(li){
-      var s=mins(li.getAttribute("data-s")),e=mins(li.getAttribute("data-e"));
-      li.classList.toggle("now",m>=s&&m<e);
-      li.classList.toggle("done",m>=e);
-    });
-  }
-  mark();setInterval(mark,30000);
-})();
-</script>
 </body>
 </html>
